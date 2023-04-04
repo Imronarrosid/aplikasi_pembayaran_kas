@@ -48,6 +48,7 @@ dependencies:
   entry: ^0.0.8+1
   path: any
   flutter_launcher_icons: ^0.12.0
+  flutter_bounceable: ^1.1.0
   
 
 dev_dependencies:

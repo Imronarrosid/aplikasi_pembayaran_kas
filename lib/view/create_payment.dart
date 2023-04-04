@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 import 'home.dart';
 
@@ -65,7 +66,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                     Navigator.pushAndRemoveUntil<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
-                            builder: (context) => const Home()),
+                            builder: (context) => const RootPage()),
                         ((route) => false));
                   }
                 }

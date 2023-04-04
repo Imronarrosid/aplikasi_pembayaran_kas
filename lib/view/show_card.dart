@@ -4,10 +4,10 @@ import 'package:pembayaran_kas/view/card_person.dart';
 
 import '../model/model.dart';
 
-Widget showPersonCard(){
+Widget showPersonCard(BuildContext context){
   return FutureBuilder(
     future: DatabaseHelper.instance.getPerson(),
-    builder: (BuildContext context, AsyncSnapshot<List<Person>> snapshot){
+    builder: (context, AsyncSnapshot<List<Person>> snapshot){
         return snapshot.hasData
                   ? StretchingOverscrollIndicator(
                     axisDirection: AxisDirection.down,
@@ -21,9 +21,11 @@ Widget showPersonCard(){
                           return true;
                         },
                         child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
                           padding: EdgeInsets.zero,
                                 itemCount: snapshot.data!.length,
-                                itemBuilder: ((BuildContext context, index) {
+                                itemBuilder: ((context, index) {
                                 var person=snapshot.data![index];
                                 return cardPrson(person:person,cardNumber: index+1);
                               })),

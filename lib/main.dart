@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pembayaran_kas/view/home.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
   await Hive.openBox('startButtonState');
   await Hive.openBox('payment');
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  statusBarColor: Color(0xFF4273FF), 
+  statusBarColor: Colors.transparent, 
 ));
   runApp(const MyApp());
 }
@@ -34,6 +35,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       theme: ThemeData(
+        textTheme: TextTheme(
+          titleMedium: TextStyle(color: Colors.black,fontSize: 14),
+          displayLarge: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w600)
+        ),
         brightness: Brightness.light,
         primaryColor: const Color(0xFF4273FF),
         colorScheme:const ColorScheme.light(
@@ -45,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         ) 
 
       ),
-      home: const Home(),
+      home: const RootPage(),
     );
   }
 }

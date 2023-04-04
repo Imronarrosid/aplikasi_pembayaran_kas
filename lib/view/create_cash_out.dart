@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/model/cash_out_model.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 import '../model/payment.dart';
 import 'home.dart';
@@ -79,7 +80,7 @@ class _CashOutPageState extends State<CashOutPage> {
                 Navigator.pushAndRemoveUntil<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
-                            builder: (context) => const Home()),
+                            builder: (context) => const RootPage()),
                         ((route) => false));
                   
                 }
