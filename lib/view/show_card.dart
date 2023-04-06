@@ -25,7 +25,7 @@ Widget showPersonCard(BuildContext context){
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                                 itemCount: snapshot.data!.length,
-                                itemBuilder: ((context, index) {
+                                itemBuilder: ((_, index) {
                                 var person=snapshot.data![index];
                                 return cardPrson(context:context,person:person,cardNumber: index+1);
                               })),

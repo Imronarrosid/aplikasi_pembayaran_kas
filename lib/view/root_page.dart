@@ -25,6 +25,7 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         unselectedItemColor: Theme.of(context).colorScheme.primary,
         currentIndex: selectedIndex,
         onTap: (index) {

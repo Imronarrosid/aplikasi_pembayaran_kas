@@ -24,7 +24,7 @@ Widget cardPrson({required context, required Person person, required int cardNum
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: ((context) => PersonPage(
+                      builder: ((contex) => PersonPage(
                             person: person,
                           ))));
             } else {
@@ -35,7 +35,7 @@ Widget cardPrson({required context, required Person person, required int cardNum
             borderOnForeground: false,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            elevation: 0.5,
+            
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -79,11 +79,11 @@ Widget cardPrson({required context, required Person person, required int cardNum
                                     horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: Colors.green[100]),
+                                    color: const Color(0xFF4273FF).withOpacity(0.2)),
                                 child: const Text(
                                   'Lunas',
                                   style: TextStyle(
-                                      color: Colors.green,
+                                      color: Color(0xFF4273FF),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500),
                                 ))

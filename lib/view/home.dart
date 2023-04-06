@@ -349,9 +349,9 @@ class _HomeState extends State<Home> {
                                       Container(
                                         width: 1.2,
                                         height: 50,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.vertical(
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context).primaryColor,
+                                            borderRadius: const BorderRadius.vertical(
                                                 top: Radius.circular(50),
                                                 bottom: Radius.circular(50))),
                                       ),
