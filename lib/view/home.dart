@@ -165,12 +165,16 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 13),
-                      height: 170,
+                      height: 190,
                       width: double.infinity,
                       child: Card(
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.2),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           //padding component inside card
@@ -188,20 +192,30 @@ class _HomeState extends State<Home> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Sisa kas', style: title1),
+                                          Text('Sisa kas',
+                                              style: title1.merge(TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary))),
                                           Row(
                                             children: [
-                                              const Text(
+                                              Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Colors.white),
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
                                                     Payment.getBalaceLeft()),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .displayLarge,
+                                                    .displayLarge!
+                                                    .merge(TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary)),
                                               ),
                                             ],
                                           ),
@@ -210,7 +224,7 @@ class _HomeState extends State<Home> {
                                       FutureBuilder(
                                           future: DatabaseHelper.instance
                                               .getPerson(),
-                                          builder: (context, snapshot) {
+                                          builder: (_, snapshot) {
                                             var data = snapshot.data;
                                             return snapshot.hasData
                                                 ? (Payment.getName() != null &&
@@ -218,26 +232,27 @@ class _HomeState extends State<Home> {
                                                             0 &&
                                                         data!.isNotEmpty)
                                                     ? Container(
-                                                        padding: const EdgeInsets.only(
-                                                            right: 5,
-                                                            left: 5,
-                                                            top: 0,
-                                                            bottom: 15),
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                right: 5,
+                                                                left: 5,
+                                                                top: 0,
+                                                                bottom: 15),
                                                         height: 50,
                                                         child: (StartButtonController
                                                                 .getState())
-                                                            ? OutlinedButton(
-                                                                style: OutlinedButton.styleFrom(
+                                                            ? ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Theme.of(context).colorScheme.primary,
                                                                     shape: RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            100)),
-                                                                    minimumSize: const Size(
-                                                                        110, 15),
-                                                                    side: const BorderSide(
-                                                                        width:
-                                                                            1.5,
-                                                                        color: Color(0xFFFFF32B)),
-                                                                    foregroundColor: const Color(0xFFFFF32B),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                100)),
+                                                                    minimumSize:
+                                                                        const Size(
+                                                                            110,
+                                                                            15),
+                                                                    
                                                                     maximumSize: const Size(120, 15)),
                                                                 child: Row(
                                                                   mainAxisAlignment:
@@ -260,8 +275,8 @@ class _HomeState extends State<Home> {
                                                                   setState(
                                                                       () {});
                                                                 })
-                                                            : OutlinedButton(
-                                                                style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)), minimumSize: const Size(110, 15), side: BorderSide(width: 1.5, color: Theme.of(context).colorScheme.tertiary), foregroundColor: Theme.of(context).colorScheme.tertiary, maximumSize: const Size(120, 15)),
+                                                            : ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)), minimumSize: const Size(110, 15), maximumSize: const Size(120, 15)),
                                                                 child: Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
@@ -295,25 +310,37 @@ class _HomeState extends State<Home> {
                                         children: [
                                           Row(
                                             children: [
-                                              Text('Pemasukan', style: title1),
-                                              const Icon(Icons.add,
+                                              Text('Pemasukan',
+                                                  style: title1.merge(TextStyle(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary))),
+                                              Icon(Icons.add,
                                                   size: 16,
-                                                  color: Colors.white),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              const Text(
+                                              Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Colors.white),
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
                                                     Payment.getCashIn()),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .displayLarge,
+                                                    .displayLarge!
+                                                    .merge(TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary)),
                                               ),
                                             ],
                                           ),
@@ -335,27 +362,38 @@ class _HomeState extends State<Home> {
                                           Row(
                                             children: [
                                               Text('Pengeluaran',
-                                                  style: title1),
-                                              const Icon(
+                                                  style: title1.merge(TextStyle(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary))),
+                                              Icon(
                                                 Icons.remove,
                                                 size: 16,
-                                                color: Colors.white,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                               ),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              const Text(
+                                              Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Colors.white),
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
                                                     Payment.getCashOut()),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .displayLarge,
+                                                    .displayLarge!
+                                                    .merge(TextStyle(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary)),
                                               ),
                                             ],
                                           ),
@@ -379,7 +417,7 @@ class _HomeState extends State<Home> {
                             margin: const EdgeInsets.symmetric(horizontal: 19),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Colors.grey[200]),
+                           ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -391,7 +429,7 @@ class _HomeState extends State<Home> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Text(dateFormat.format(DateTime.now()))
+                                Text(dateFormat.format(DateTime.now()),style: TextStyle(),)
                               ],
                             ),
                           )

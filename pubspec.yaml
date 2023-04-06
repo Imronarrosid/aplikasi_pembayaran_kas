@@ -49,6 +49,7 @@ dependencies:
   path: any
   flutter_launcher_icons: ^0.12.0
   flutter_bounceable: ^1.1.0
+  flutter_local_notifications: ^13.0.0
   
 
 dev_dependencies:

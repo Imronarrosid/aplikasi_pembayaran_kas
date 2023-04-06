@@ -9,8 +9,8 @@ import 'package:pembayaran_kas/number_formater/number_format.dart';
 import 'package:pembayaran_kas/view/not_started_dialog.dart';
 import 'package:pembayaran_kas/view/person.dart';
 
-Widget cardPrson({required Person person, required int cardNumber}) {
-  return Builder(builder: (context) {
+Widget cardPrson({required context, required Person person, required int cardNumber}) {
+  return Builder(builder: (_) {
     return Entry.offset(
       xOffset: 300,
       yOffset: 0,
@@ -104,8 +104,7 @@ Widget cardPrson({required Person person, required int cardNumber}) {
                       children: [
                         const Text(
                           'Rp ',
-                          style: TextStyle(
-                              color: const Color(0xFF4273FF), fontSize: 12),
+                          style: TextStyle( fontSize: 12),
                         ),
                         Text(
                           NumberFormater.numFormat(int.parse(person.paid)),
@@ -113,7 +112,6 @@ Widget cardPrson({required Person person, required int cardNumber}) {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
                           style: const TextStyle(
-                              color: Color(0xFF4273FF),
                               fontWeight: FontWeight.w500),
                         ),
                       ],

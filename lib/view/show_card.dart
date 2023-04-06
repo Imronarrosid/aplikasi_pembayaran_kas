@@ -7,7 +7,7 @@ import '../model/model.dart';
 Widget showPersonCard(BuildContext context){
   return FutureBuilder(
     future: DatabaseHelper.instance.getPerson(),
-    builder: (context, AsyncSnapshot<List<Person>> snapshot){
+    builder: (_, AsyncSnapshot<List<Person>> snapshot){
         return snapshot.hasData
                   ? StretchingOverscrollIndicator(
                     axisDirection: AxisDirection.down,
@@ -27,7 +27,7 @@ Widget showPersonCard(BuildContext context){
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: ((context, index) {
                                 var person=snapshot.data![index];
-                                return cardPrson(person:person,cardNumber: index+1);
+                                return cardPrson(context:context,person:person,cardNumber: index+1);
                               })),
                       ),
                     ),

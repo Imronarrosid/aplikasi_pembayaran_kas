@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pembayaran_kas/controller/not_paid_controller.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/view/home.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 Future<void> stopPaymentDialog(BuildContext context) async {
   showDialog<void>(
@@ -36,7 +37,7 @@ Future<void> stopPaymentDialog(BuildContext context) async {
                 if (context.mounted) {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => const Home()),
+                      MaterialPageRoute(builder: (context) => const RootPage()),
                       (route) => false);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Pembayaran diselesaikan')),
