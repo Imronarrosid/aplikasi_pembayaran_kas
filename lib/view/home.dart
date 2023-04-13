@@ -55,89 +55,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         extendBody: false,
         key: _key,
-        drawer: Container(
-          color: Colors.white,
-          child: Drawer(
-            child: ListView(
-              children: [
-                DrawerHeader(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary),
-                    child: Container(
-                        alignment: Alignment.centerLeft,
-                        color: Theme.of(context).colorScheme.primary,
-                        child: const Text(
-                          'Aplikasi Kas',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600),
-                        ))),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  leading: const Icon(IconlyBroken.home),
-                  iconColor: Theme.of(context).colorScheme.primary,
-                  title: const Text('Beranda'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  leading: const Icon(IconlyBroken.edit_square),
-                  iconColor: listTileIconColor,
-                  title: (Payment.getName() != null)
-                      ? const Text('Edit Kas')
-                      : const Text('Buat Kas'),
-                  onTap: (() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreatePayment(),
-                        ));
-                  }),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  leading: const Icon(IconlyBroken.paper_plus),
-                  iconColor: listTileIconColor,
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const CashOutPage())));
-                  },
-                  title: const Text('Buat Pengeluaran'),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  leading: const Icon(IconlyBroken.paper),
-                  iconColor: listTileIconColor,
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const CashOutHistory())));
-                  },
-                  title: const Text('Catatan Pengeluaran'),
-                ),
-              ],
-            ),
-          ),
-        ),
+        
         body: SizedBox(
             width: screenWidth,
             child: StretchingOverscrollIndicator(
@@ -151,7 +69,8 @@ class _HomeState extends State<Home> {
                     overScroll.disallowIndicator();
                     return true;
                   },
-                  child: ListView(shrinkWrap: true, children: [
+                  child: ListView(
+                    shrinkWrap: true, children: [
                     SafeArea(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -174,7 +93,7 @@ class _HomeState extends State<Home> {
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.2),
+                            .withOpacity(0.1),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           //padding component inside card
@@ -193,10 +112,8 @@ class _HomeState extends State<Home> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text('Sisa kas',
-                                              style: title1.merge(TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary))),
+                                              style: title1.merge(const TextStyle(
+                                                  color: Colors.black87))),
                                           Row(
                                             children: [
                                               Text(
@@ -435,8 +352,7 @@ class _HomeState extends State<Home> {
                           )
                         : Container(),
                     const SizedBox(height: 10),
-                    Expanded(
-                        child: Padding(
+                    Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: FutureBuilder(
@@ -452,7 +368,7 @@ class _HomeState extends State<Home> {
                                   return showPersonCard(context);
                                 }
                               },
-                            ))
+                            )
                         // ListView.builder(
                         //     padding: EdgeInsets.zero,
                         //     scrollDirection: Axis.vertical,
