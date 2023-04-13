@@ -186,8 +186,10 @@ class _CreatePaymentState extends State<CreatePayment> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: form.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (_, index) {
+                    //Form person list
                     return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           '${form.length - index}.',
@@ -203,7 +205,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                               color: Colors.grey[100],
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            width: sreenWidth - 57,
+                            width: sreenWidth - 105,
                             child: TextFormField(
                               controller: form[index],
                               validator: (value) {
@@ -226,6 +228,14 @@ class _CreatePaymentState extends State<CreatePayment> {
                             ),
                           ),
                         ),
+                        IconButton(
+                          onPressed: (){
+                            form.removeAt(index);
+                            setState(() {
+                              
+                            });
+                          },
+                          icon:const Icon(Icons.clear_rounded,size:30,color: Colors.black45,))
                       ],
                     );
                   }),
