@@ -4,7 +4,6 @@ import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
-import 'home.dart';
 
 class CreatePayment extends StatefulWidget {
   const CreatePayment({super.key});
@@ -85,7 +84,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                 height: 10,
               ),
               const Text('Judul kas',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
@@ -94,7 +93,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                 child: TextFormField(
                   controller: nameController,
                   style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.black54),
                   validator: (value) {
@@ -108,7 +107,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                   decoration: const InputDecoration(
                     hintText: 'Judul kas',
                     floatingLabelAlignment: FloatingLabelAlignment.start,
-                    floatingLabelStyle: TextStyle(fontSize: 20),
+                    floatingLabelStyle: TextStyle(fontSize: 216),
                     contentPadding: EdgeInsets.only(left: 10),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -118,7 +117,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                 height: 10,
               ),
               const Text('Nominal',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(color: Colors.grey[100]),
@@ -126,7 +125,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                     controller: amountController,
                     keyboardType: TextInputType.number,
                     style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Colors.black54),
                     validator: (value) {
@@ -152,22 +151,32 @@ class _CreatePaymentState extends State<CreatePayment> {
                 children: [
                   const Text(
                     'Tambah Anggota',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 40,
-                      width: 40,
-                      child: IconButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              form.insert(0, TextEditingController());
-                            }
-                            setState(() {});
-                          },
-                          icon: Icon(Icons.add,
-                              size: 30,
-                              color: Theme.of(context).colorScheme.primary))),
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: ElevatedButton(
+                          
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100)
+                            ),
+                            alignment: Alignment.center,
+                            backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2)
+                          ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                form.insert(0, TextEditingController());
+                              }
+                              setState(() {});
+                            },
+                            child: Icon(Icons.add,
+                                size: 30,
+                                color: Theme.of(context).colorScheme.primary)),
+                  ),
                 ],
               ),
               const SizedBox(

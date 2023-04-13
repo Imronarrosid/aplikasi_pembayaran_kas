@@ -32,7 +32,6 @@ Widget cardPrson({required context, required Person person, required int cardNum
             }
           },
           child: Card(
-            borderOnForeground: false,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             
