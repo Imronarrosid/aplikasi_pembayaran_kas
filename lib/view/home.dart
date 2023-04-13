@@ -116,12 +116,10 @@ class _HomeState extends State<Home> {
                                                   color: Colors.black87))),
                                           Row(
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary),
+                                                    color: Colors.black87),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
@@ -129,10 +127,8 @@ class _HomeState extends State<Home> {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .displayLarge!
-                                                    .merge(TextStyle(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary)),
+                                                    .merge(const TextStyle(
+                                                        color: Colors.black87)),
                                               ),
                                             ],
                                           ),
@@ -228,25 +224,19 @@ class _HomeState extends State<Home> {
                                           Row(
                                             children: [
                                               Text('Pemasukan',
-                                                  style: title1.merge(TextStyle(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary))),
-                                              Icon(Icons.add,
+                                                  style: title1.merge(const TextStyle(
+                                                      color: Colors.black87))),
+                                              const Icon(Icons.add,
                                                   size: 16,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary),
+                                                  color: Colors.black87),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary),
+                                                    color: Colors.black87),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
@@ -254,10 +244,8 @@ class _HomeState extends State<Home> {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .displayLarge!
-                                                    .merge(TextStyle(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary)),
+                                                    .merge(const TextStyle(
+                                                        color: Colors.black87)),
                                               ),
                                             ],
                                           ),
@@ -266,9 +254,9 @@ class _HomeState extends State<Home> {
                                       Container(
                                         width: 1.2,
                                         height: 50,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context).primaryColor,
-                                            borderRadius: const BorderRadius.vertical(
+                                        decoration: const BoxDecoration(
+                                            color: Colors.black87,
+                                            borderRadius: BorderRadius.vertical(
                                                 top: Radius.circular(50),
                                                 bottom: Radius.circular(50))),
                                       ),
@@ -279,27 +267,21 @@ class _HomeState extends State<Home> {
                                           Row(
                                             children: [
                                               Text('Pengeluaran',
-                                                  style: title1.merge(TextStyle(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary))),
-                                              Icon(
+                                                  style: title1.merge(const TextStyle(
+                                                      color: Colors.black87))),
+                                              const Icon(
                                                 Icons.remove,
                                                 size: 16,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
+                                                color: Colors.black87
                                               ),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'Rp ',
                                                 style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primary),
+                                                    color: Colors.black87),
                                               ),
                                               Text(
                                                 NumberFormater.numFormat(
@@ -307,10 +289,8 @@ class _HomeState extends State<Home> {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .displayLarge!
-                                                    .merge(TextStyle(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary)),
+                                                    .merge(const TextStyle(
+                                                        color: Colors.black87)),
                                               ),
                                             ],
                                           ),
@@ -355,19 +335,23 @@ class _HomeState extends State<Home> {
                     Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: FutureBuilder(
-                              future: isTableEmpty(),
-                              builder: (context, AsyncSnapshot<int> snapshot) {
-                                var isTableEmpty = snapshot.data;
-                                if (isTableEmpty == 0) {
-                                  StartButtonController().falseState();
-                                  return const Center(
-                                    child: Text('Belum ada pembayaran'),
-                                  );
-                                } else {
-                                  return showPersonCard(context);
-                                }
-                              },
+                            child: SizedBox(
+                              child: FutureBuilder(
+                                future: isTableEmpty(),
+                                builder: (_, AsyncSnapshot<int> snapshot) {
+                                  var isTableEmpty = snapshot.data;
+                                  if (isTableEmpty == 0) {
+                                    StartButtonController().falseState();
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      height: 300,
+                                      child: Text('Belum ada pembayaran',style:TextStyle(fontSize:16,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor),),
+                                    );
+                                  } else {
+                                    return showPersonCard(context);
+                                  }
+                                },
+                              ),
                             )
                         // ListView.builder(
                         //     padding: EdgeInsets.zero,
