@@ -21,7 +21,7 @@ class _CreatePaymentState extends State<CreatePayment> {
   TextEditingController personNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  List<TextEditingController> form = [TextEditingController()];
+  List<TextEditingController> form = [];
   @override
   Widget build(BuildContext context) {
     double sreenWidth = MediaQuery.of(context).size.width;
