@@ -12,9 +12,9 @@ import 'package:pembayaran_kas/view/person.dart';
 Widget cardPrson({required context, required Person person, required int cardNumber}) {
   return Builder(builder: (_) {
     return Entry.offset(
-      xOffset: 300,
+      xOffset: 1000,
       yOffset: 0,
-      delay: const Duration(milliseconds: 200),
+      delay: const Duration(milliseconds:200),
       child: Container(
         height: 70,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
@@ -32,8 +32,10 @@ Widget cardPrson({required context, required Person person, required int cardNum
             }
           },
           child: Card(
+            
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
             
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
