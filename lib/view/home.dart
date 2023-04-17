@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
                         height: 80,
                         child: Entry.offset(
                           yOffset: -1000,
-                          delay: Duration(milliseconds: 100),
+                          delay: const Duration(milliseconds: 100),
                           child: Text(
                             'Aplikasi Kas',
                             style: Theme.of(context).textTheme.headlineSmall,
