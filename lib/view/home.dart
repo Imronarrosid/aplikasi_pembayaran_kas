@@ -6,7 +6,6 @@ import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/number_formater/number_format.dart';
-import 'package:pembayaran_kas/view/cash_out_history.dart';
 import 'package:pembayaran_kas/view/create_cash_out.dart';
 import 'package:pembayaran_kas/view/create_payment.dart';
 import 'package:pembayaran_kas/view/show_card.dart';

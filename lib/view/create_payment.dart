@@ -5,7 +5,6 @@ import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
-
 class CreatePayment extends StatefulWidget {
   const CreatePayment({super.key});
 
@@ -36,34 +35,38 @@ class _CreatePaymentState extends State<CreatePayment> {
           xOffset: 0,
           child: SizedBox.expand(
             child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                    minimumSize: const Size(double.infinity, 45),
+                    maximumSize: const Size(double.infinity, 45)),
                 onPressed: () async {
-        
-        
                   if (_formKey.currentState!.validate()) {
                     //execute whwn paymen name null
-        
+
                     if (Payment.getName() == null) {
                       Payment.setPaymentName(nameController.text);
-        
+
                       Payment.setAmount(int.parse(amountController.text));
-        
+
                       Payment.setHaveToPaid(int.parse(amountController.text));
                     }
-        
+
                     //looping for add person to database
-        
+
                     for (int i = 0; i < form.length; i++) {
                       var item = form[i];
-        
+
                       Person person = Person(
                           name: item.text,
                           paid: '0',
                           notPaid: Payment.getHaveToPaid().toString(),
                           createdAt: DateTime.now().toString());
-        
+
                       await DatabaseHelper.instance.add(person);
                     }
-        
+
                     if (context.mounted) {
                       Navigator.pushAndRemoveUntil<dynamic>(
                           context,
@@ -89,17 +92,18 @@ class _CreatePaymentState extends State<CreatePayment> {
               ),
               const Entry.offset(
                 yOffset: 0,
-                xOffset: 100,
+                xOffset: 1000,
                 child: Text('Judul kas',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               ),
               Entry.offset(
                 yOffset: 0,
-                xOffset: 100,
+                xOffset: 1000,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
-                      color: Colors.grey[100],
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(5)),
                   child: TextFormField(
                     controller: nameController,
@@ -131,15 +135,19 @@ class _CreatePaymentState extends State<CreatePayment> {
               const Entry.offset(
                 yOffset: 0,
                 xOffset: 1000,
+                delay: Duration(milliseconds: 50),
                 child: Text('Nominal',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               ),
               Entry.offset(
                 yOffset: 0,
                 xOffset: 1000,
+                delay: const Duration(milliseconds: 50),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(color: Colors.grey[100]),
+                  decoration: BoxDecoration(color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(5)),
                   child: TextFormField(
                       controller: amountController,
                       keyboardType: TextInputType.number,
@@ -157,8 +165,8 @@ class _CreatePaymentState extends State<CreatePayment> {
                         contentPadding: EdgeInsets.only(left: 10),
                         hintText: 'Nominal/pembayaran',
                         floatingLabelAlignment: FloatingLabelAlignment.start,
-                        floatingLabelStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                        floatingLabelStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       )),
                 ),
@@ -169,36 +177,37 @@ class _CreatePaymentState extends State<CreatePayment> {
               Entry.offset(
                 yOffset: 0,
                 xOffset: 1000,
+                delay: const Duration(milliseconds: 100),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
                       'Tambah Anggota',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 40,
                       width: 40,
                       child: ElevatedButton(
-                            
-                            style: ElevatedButton.styleFrom(
+                          style: ElevatedButton.styleFrom(
                               elevation: 0,
                               padding: EdgeInsets.zero,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)
-                              ),
+                                  borderRadius: BorderRadius.circular(100)),
                               alignment: Alignment.center,
-                              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2)
-                            ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  form.insert(0, TextEditingController());
-                                }
-                                setState(() {});
-                              },
-                              child: Icon(Icons.add,
-                                  size: 30,
-                                  color: Theme.of(context).colorScheme.primary)),
+                              backgroundColor: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2)),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              form.insert(0, TextEditingController());
+                            }
+                            setState(() {});
+                          },
+                          child: Icon(Icons.add,
+                              size: 30,
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                   ],
                 ),
@@ -253,13 +262,15 @@ class _CreatePaymentState extends State<CreatePayment> {
                           ),
                         ),
                         IconButton(
-                          onPressed: (){
-                            form.removeAt(index);
-                            setState(() {
-                              
-                            });
-                          },
-                          icon:const Icon(Icons.clear_rounded,size:30,color: Colors.black45,))
+                            onPressed: () {
+                              form.removeAt(index);
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.clear_rounded,
+                              size: 30,
+                              color: Colors.black45,
+                            ))
                       ],
                     );
                   }),
