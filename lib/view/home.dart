@@ -1,3 +1,4 @@
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
@@ -5,8 +6,6 @@ import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/number_formater/number_format.dart';
-import 'package:pembayaran_kas/view/balance_left.dart';
-import 'package:pembayaran_kas/view/cash_out_history.dart';
 import 'package:pembayaran_kas/view/create_cash_out.dart';
 import 'package:pembayaran_kas/view/create_payment.dart';
 import 'package:pembayaran_kas/view/show_card.dart';
@@ -39,7 +38,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Color listTileIconColor = Theme.of(context).colorScheme.primary;
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
+    TextStyle title1 = Theme.of(context)
+        .textTheme
+        .titleMedium!
+        .merge(const TextStyle(color: Colors.white));
     late String paymentName = Payment.getName();
     var dateFormat = DateFormat('yyyy-MM-dd');
     Future<int> isTableEmpty() async {
@@ -51,340 +53,345 @@ class _HomeState extends State<Home> {
     }
 
     return Scaffold(
-      extendBody: false,
-      key: _key,
-      drawer: Container(
-        color: Colors.white,
-        child: Drawer(
-          child: ListView(
-            children: [
-              DrawerHeader(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary),
+        extendBody: false,
+        key: _key,
+        body: SizedBox(
+          width: screenWidth,
+          height: double.infinity,
+          child: StretchingOverscrollIndicator(
+            axisDirection: AxisDirection.down,
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (overScroll) {
+                overScroll.disallowIndicator();
+                return true;
+              },
+              child: ListView(shrinkWrap: true, children: [
+                SafeArea(
                   child: Container(
-                      alignment: Alignment.centerLeft,
-                      color: Theme.of(context).colorScheme.primary,
-                      child: const Text(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    alignment: Alignment.centerLeft,
+                    height: 80,
+                    child: Entry.offset(
+                      yOffset: -1000,
+                      delay: const Duration(milliseconds: 100),
+                      child: Text(
                         'Aplikasi Kas',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w600),
-                      ))),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                leading: const Icon(IconlyBroken.home),
-                iconColor: Theme.of(context).colorScheme.primary,
-                title: const Text('Beranda'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                leading: const Icon(IconlyBroken.edit_square),
-                iconColor: listTileIconColor,
-                title: (Payment.getName() != null)
-                    ? const Text('Edit Kas')
-                    : const Text('Buat Kas'),
-                onTap: (() {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreatePayment(),
-                      ));
-                }),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                leading: const Icon(IconlyBroken.paper_plus),
-                iconColor: listTileIconColor,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const CashOutPage())));
-                },
-                title: const Text('Buat Pengeluaran'),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                leading: const Icon(IconlyBroken.paper),
-                iconColor: listTileIconColor,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const CashOutHistory())));
-                },
-                title: const Text('Catatan Pengeluaran'),
-              ),
-            ],
-          ),
-        ),
-      ),
-      persistentFooterButtons: [
-        FutureBuilder(
-            future: DatabaseHelper.instance.getPerson(),
-            builder: (context, snapshot) {
-              var data = snapshot.data;
-              return snapshot.hasData
-                  ? (Payment.getName() != null &&
-                          Payment.getAmount() != 0 &&
-                          data!.isNotEmpty)
-                      ? Container(
-                          padding: const EdgeInsets.only(
-                              right: 5, left: 5, top: 0, bottom: 15),
-                          height: 65,
-                          child: (StartButtonController.getState())
-                              ? OutlinedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          const MaterialStatePropertyAll<Color>(
-                                              Colors.white),
-                                      foregroundColor: MaterialStatePropertyAll(
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .primary),
-                                      minimumSize: const MaterialStatePropertyAll<Size>(
-                                          Size(400, 20)),
-                                      maximumSize:
-                                          const MaterialStatePropertyAll<Size>(
-                                              Size(500, 20)),
-                                      side: MaterialStatePropertyAll(BorderSide(
-                                          color: Theme.of(context).colorScheme.primary,
-                                          width: 1))),
-                                  child: const Text(
-                                    'Selesaikan Kas',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  onPressed: () {
-                                    stopPaymentDialog(context);
-                                    setState(() {});
-                                  })
-                              : ElevatedButton(
-                                  style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, minimumSize: const Size(400, 20), maximumSize: const Size(500, 20)),
-                                  child: const Text('Mulai Kas'),
-                                  onPressed: () {
-                                    startPaymentDialog(context);
-                                    setState(() {});
-                                  }))
-                      : Container()
-                  : const CircularProgressIndicator();
-            }),
-      ],
-      body: SizedBox(
-        width: screenWidth,
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start, children: [
-              Stack(
-                children: [
-                  //layout heading app
-                  SafeArea(
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: Theme.of(context).primaryColor,
-                          height: screenheight * 0.13,
-                        ),
-                        Container(
-                          color: Theme.of(context).primaryColor,
-                          height: screenheight * 0.1,
-                          alignment: Alignment.centerRight,
-//Header LAyout
-                          child: SafeArea(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: IconButton(
-                                    onPressed: () {
-                                      _key.currentState!.openDrawer();
-                                    },
-                                    icon: const Icon(
-                                        size: 30,
-                                        color: Colors.white,
-                                        Icons.menu)),
-                              ),
-                              const Text(
-                                'Aplikasi Kas',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
-                              ),
-                              const Spacer(),
-                              const BalanceLeft(),
-                            ],
-                          )),
-                        ),
-                      ],
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                     ),
                   ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 120.0,
-                    ),
-                    child: SizedBox(
-                      width: screenWidth,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(
-                          //Row cash in and Cash out
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: 100,
-                              width: screenWidth * 0.45,
-                              child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 13),
+                  height: 190,
+                  width: double.infinity,
+                  child: Entry(
+                    yOffset: -1000,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.fastOutSlowIn,
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        //padding component inside card
+                        child: Padding(
+                          padding: const EdgeInsets.all(18),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: cashInWidget(),
+                                        Text('Sisa kas',
+                                            style: title1.merge(const TextStyle(
+                                                color: Colors.black87))),
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Rp ',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              NumberFormater.numFormat(
+                                                  Payment.getBalaceLeft()),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .merge(const TextStyle(
+                                                      color: Colors.black87)),
+                                            ),
+                                          ],
                                         ),
-                                        const Spacer(),
-                                        Text(
-                                            'Rp${NumberFormater.numFormat(Payment.getCashIn())}',
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black)),
-                                                const SizedBox(height: 10,)
                                       ],
                                     ),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 100,
-                              width: screenWidth * 0.45,
-                              child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                    FutureBuilder(
+                                        future:
+                                            DatabaseHelper.instance.getPerson(),
+                                        builder: (_, snapshot) {
+                                          var data = snapshot.data;
+                                          return snapshot.hasData
+                                              ? (Payment.getName() != null &&
+                                                      Payment.getAmount() !=
+                                                          0 &&
+                                                      data!.isNotEmpty)
+                                                  ? Container(
+                                                      padding: const EdgeInsets.only(
+                                                          right: 5,
+                                                          left: 5,
+                                                          top: 0,
+                                                          bottom: 15),
+                                                      height: 50,
+                                                      child: (StartButtonController
+                                                              .getState())
+                                                          ? OutlinedButton(
+                                                              style: OutlinedButton.styleFrom(
+                                                                  side: BorderSide(
+                                                                      color: Theme.of(context)
+                                                                          .primaryColor,
+                                                                      width: 1),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.circular(
+                                                                          100)),
+                                                                  minimumSize: const Size(
+                                                                      110, 15),
+                                                                  maximumSize: const Size(
+                                                                      120, 15)),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: const [
+                                                                  Text(
+                                                                    'Selesai  ',
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w600),
+                                                                  ),
+                                                                  Icon(Icons
+                                                                      .pause_rounded)
+                                                                ],
+                                                              ),
+                                                              onPressed: () {
+                                                                stopPaymentDialog(
+                                                                    context);
+                                                                setState(() {});
+                                                              })
+                                                          : ElevatedButton(
+                                                              style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Theme.of(context).colorScheme.primary,
+                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                                                                  minimumSize: const Size(110, 15),
+                                                                  maximumSize: const Size(120, 15)),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  const Text(
+                                                                      'Mulai  '),
+                                                                  Icon(Icons
+                                                                      .play_arrow_rounded)
+                                                                ],
+                                                              ),
+                                                              onPressed: () {
+                                                                startPaymentDialog(
+                                                                    context);
+                                                                setState(() {});
+                                                              }))
+                                                  : Container()
+                                              : Container();
+                                        }),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: cashOutWidget(),
+                                        Row(
+                                          children: [
+                                            Text('Pemasukan',
+                                                style: title1.merge(
+                                                    const TextStyle(
+                                                        color:
+                                                            Colors.black87))),
+                                            const Icon(Icons.add,
+                                                size: 16,
+                                                color: Colors.black87),
+                                          ],
                                         ),
-                                        const Spacer(),
-                                        Text(
-                                            // ignore: prefer_const_constructors
-                                            '-Rp${NumberFormater.numFormat(Payment.getCashOut())}',style: TextStyle(
-                                              fontWeight:FontWeight.w600,
-                                              color: Colors.red
-                                            ),),
-                                      const SizedBox( height: 10,)
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Rp ',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              NumberFormater.numFormat(
+                                                  Payment.getCashIn()),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .merge(const TextStyle(
+                                                      color: Colors.black87)),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
-                                  )),
-                            ),
-                          ],
+                                    Container(
+                                      width: 1.2,
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black87,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(50),
+                                              bottom: Radius.circular(50))),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text('Pengeluaran',
+                                                style: title1.merge(
+                                                    const TextStyle(
+                                                        color:
+                                                            Colors.black87))),
+                                            const Icon(Icons.remove,
+                                                size: 16,
+                                                color: Colors.black87),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Rp ',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              NumberFormater.numFormat(
+                                                  Payment.getCashOut()),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .merge(const TextStyle(
+                                                      color: Colors.black87)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ]),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              (Payment.getName() != null)
-                  ? Container(
-                      height: 34,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 13),
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.grey[200]),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            (Payment.getName() == null)
-                                ? 'Pembayaran kas'
-                                : paymentName,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                (Payment.getName() != null)
+                    ? Entry.offset(
+                        xOffset: 300,
+                        yOffset: 0,
+                        delay: const Duration(milliseconds: 200),
+                        child: Container(
+                          height: 34,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 13),
+                          margin: const EdgeInsets.symmetric(horizontal: 19),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          Text(dateFormat.format(DateTime.now()))
-                        ],
-                      ),
-                    )
-                  : Container(),
-              const SizedBox(height: 10),
-              Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                (Payment.getName() == null)
+                                    ? 'Pembayaran kas'
+                                    : paymentName,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                dateFormat.format(DateTime.now()),
+                                style: TextStyle(),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(height: 10),
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SizedBox(
                       child: FutureBuilder(
                         future: isTableEmpty(),
-                        builder: (context, AsyncSnapshot<int> snapshot) {
+                        builder: (_, AsyncSnapshot<int> snapshot) {
                           var isTableEmpty = snapshot.data;
                           if (isTableEmpty == 0) {
                             StartButtonController().falseState();
-                            return const Center(
-                              child: Text('Belum ada pembayaran'),
+                            return Container(
+                              alignment: Alignment.center,
+                              height: 300,
+                              child: Text(
+                                'Belum ada pembayaran',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(context).primaryColor),
+                              ),
                             );
                           } else {
-                            return showPersonCard();
+                            return showPersonCard(context);
                           }
                         },
-                      ))
-                  // ListView.builder(
-                  //     padding: EdgeInsets.zero,
-                  //     scrollDirection: Axis.vertical,
-                  //     shrinkWrap: true,
-                  //     itemCount: data.length,
-                  //     itemBuilder: ((context, index) {
-                  //       var items = data[index];
-                  //       return Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal:10.0),
-                  //         child: cardPrson(
-                  //             personName: items.name,
-                  //             paid: items.getPaid(),
-                  //             notPaid: items.getNotPaid(),
-                  //             index: index),
-                  //       );
-                  //     })),
-                  ),
-            ]),
-          ],
-        ),
-      ),
-    );
+                      ),
+                    )
+                    // ListView.builder(
+                    //     padding: EdgeInsets.zero,
+                    //     scrollDirection: Axis.vertical,
+                    //     shrinkWrap: true,
+                    //     itemCount: data.length,
+                    //     itemBuilder: ((context, index) {
+                    //       var items = data[index];
+                    //       return Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal:10.0),
+                    //         child: cardPrson(
+                    //             personName: items.name,
+                    //             paid: items.getPaid(),
+                    //             notPaid: items.getNotPaid(),
+                    //             index: index),
+                    //       );
+                    //     })),
+                    ),
+              ]),
+            ),
+          ),
+        ));
   }
 
   Container cashInWidget() {

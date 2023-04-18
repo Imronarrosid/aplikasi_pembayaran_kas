@@ -4,6 +4,7 @@ import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/number_formater/number_format.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 import 'home.dart';
 
 class PersonPage extends StatefulWidget {
@@ -122,7 +123,7 @@ class _PersonPageState extends State<PersonPage> {
                                   height: 50,
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                  color: Colors.grey[100],
+                                  color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   width: secreenWidth - 180,
@@ -233,7 +234,7 @@ showDialog(context: context, builder: (BuildContext context){
                 Navigator.pushAndRemoveUntil<dynamic>(
                     context,
                     MaterialPageRoute<dynamic>(
-                        builder: (context) => const Home()),
+                        builder: (context) => const RootPage()),
                     ((route) => false));
 
       }, child: const Text('Hapus'))
