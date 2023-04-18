@@ -47,7 +47,7 @@ class _RootPageState extends State<RootPage> {
           BottomNavigationBarItem(
             activeIcon: Icon(IconlyBold.paper),
             label: 'Pengeluaran'
-            ,icon:Icon(IconlyBroken.paper_plus))
+            ,icon:Icon(IconlyBroken.paper))
         ]),
       ),
       body: listScreen[selectedIndex],

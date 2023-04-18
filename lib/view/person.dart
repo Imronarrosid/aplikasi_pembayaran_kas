@@ -123,7 +123,7 @@ class _PersonPageState extends State<PersonPage> {
                                   height: 50,
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                  color: Colors.grey[100],
+                                  color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   width: secreenWidth - 180,

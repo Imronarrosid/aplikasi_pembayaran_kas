@@ -8,7 +8,6 @@ import 'package:pembayaran_kas/number_formater/number_format.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
 import '../model/payment.dart';
-import 'home.dart';
 
 class CashOutPage extends StatefulWidget {
   const CashOutPage({super.key});
@@ -24,10 +23,18 @@ class _CashOutPageState extends State<CashOutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Buat Pengeluaran'),
-      ),
+      appBar: PreferredSize(preferredSize: const Size(double.infinity, 60),
+      child:Entry.offset(
+        yOffset: -1000,
+        child: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          title: const Text('Buat Pengeluaran',style:TextStyle(color: Colors.black)),
+        ),
+      ),),
       body: Container(
+        height: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _formKey,
@@ -175,17 +182,20 @@ class _CashOutPageState extends State<CashOutPage> {
                                             delay: const Duration(
                                                 milliseconds: 50),
                                             child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10)
+                                              ),
                                               child: Container(
                                                   padding: const EdgeInsets
                                                           .symmetric(
                                                       horizontal: 10),
-                                                  height: 70,
+                                                  height: 60,
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Icon(
-                                                        IconlyBroken.paper,
+                                                        IconlyBold.paper,
                                                         size: 40,
                                                         color: Theme.of(context)
                                                             .colorScheme
