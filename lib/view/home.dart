@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                       yOffset: -1000,
                       delay: const Duration(milliseconds: 100),
                       child: Text(
-                        'Aplikasi Kas',
+                        'Catatan',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Sisa kas',
+                                        Text('Sisa',
                                             style: title1.merge(const TextStyle(
                                                 color: Colors.black87))),
                                         Row(
@@ -198,8 +198,8 @@ class _HomeState extends State<Home> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [
-                                                                  const Text(
+                                                                children: const [
+                                                                  Text(
                                                                       'Mulai  '),
                                                                   Icon(Icons
                                                                       .play_arrow_rounded)
@@ -314,7 +314,7 @@ class _HomeState extends State<Home> {
                 ),
                 (Payment.getName() != null)
                     ? Entry.offset(
-                        xOffset: 300,
+                        xOffset: 1000,
                         yOffset: 0,
                         delay: const Duration(milliseconds: 200),
                         child: Container(
