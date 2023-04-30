@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
+import 'package:pembayaran_kas/service/notification.dart';
 import 'package:pembayaran_kas/view/home.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
@@ -32,6 +33,11 @@ Future<void> startPaymentDialog(BuildContext context) async {
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const RootPage()), (route) => false);
                  ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Pembayaran dimulai')),
+                        );
+
+                        Notif.showNotification(
+                          id: 0,title: 'Pembayaran Kas',
+                          body: 'Pembayaran Kas sedang berjalan'
                         );
               },
             ),
