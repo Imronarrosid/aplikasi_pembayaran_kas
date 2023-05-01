@@ -405,7 +405,7 @@ paidDialog(context, person, amount) {
               constraints: const BoxConstraints(minWidth: double.infinity),
               child: ElevatedButton(
                   onPressed: () {
-                    var formatter = DateFormat('dd/MM/yyyy hh:mm');
+                    var formatter = DateFormat('EEEE, d MMMM yyyy - hh:mm','id_ID');
 
                     PersonPayment payment = PersonPayment(
                         name: person,
