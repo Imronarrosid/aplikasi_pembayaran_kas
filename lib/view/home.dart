@@ -116,14 +116,7 @@ class _HomeState extends State<Home> {
                                         Text('Sisa',
                                             style: title1.merge(const TextStyle(
                                                 color: Colors.black87))),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
-                                            ),
-                                            Text(
+                                        Text(
                                               NumberFormater.numFormat(
                                                   Payment.getBalaceLeft()),
                                               style: Theme.of(context)
@@ -131,8 +124,7 @@ class _HomeState extends State<Home> {
                                                   .displayLarge!
                                                   .merge(const TextStyle(
                                                       color: Colors.black87)),
-                                            ),
-                                          ],
+                                        
                                         ),
                                       ],
                                     ),
@@ -235,15 +227,7 @@ class _HomeState extends State<Home> {
                                                 size: 16,
                                                 color: Colors.black87),
                                           ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
-                                            ),
-                                            Text(
+                                        ),Text(
                                               NumberFormater.numFormat(
                                                   Payment.getCashIn()),
                                               style: Theme.of(context)
@@ -251,8 +235,6 @@ class _HomeState extends State<Home> {
                                                   .displayLarge!
                                                   .merge(const TextStyle(
                                                       color: Colors.black87)),
-                                            ),
-                                          ],
                                         ),
                                       ],
                                     ),
@@ -281,13 +263,6 @@ class _HomeState extends State<Home> {
                                                 color: Colors.black87),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
-                                            ),
                                             Text(
                                               NumberFormater.numFormat(
                                                   Payment.getCashOut()),
@@ -296,8 +271,6 @@ class _HomeState extends State<Home> {
                                                   .displayLarge!
                                                   .merge(const TextStyle(
                                                       color: Colors.black87)),
-                                            ),
-                                          ],
                                         ),
                                       ],
                                     ),

@@ -9,12 +9,13 @@ import 'package:pembayaran_kas/number_formater/number_format.dart';
 import 'package:pembayaran_kas/view/not_started_dialog.dart';
 import 'package:pembayaran_kas/view/person.dart';
 
-Widget cardPrson({required context, required Person person, required int cardNumber}) {
+Widget cardPrson(
+    {required context, required Person person, required int cardNumber}) {
   return Builder(builder: (_) {
     return Entry.offset(
       xOffset: 1000,
       yOffset: 0,
-      delay: const Duration(milliseconds:200),
+      delay: const Duration(milliseconds: 200),
       child: Container(
         height: 70,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
@@ -32,11 +33,8 @@ Widget cardPrson({required context, required Person person, required int cardNum
             }
           },
           child: Card(
-            
             shape:
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-            
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +78,8 @@ Widget cardPrson({required context, required Person person, required int cardNum
                                     horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: const Color(0xFF4273FF).withOpacity(0.2)),
+                                    color: const Color(0xFF4273FF)
+                                        .withOpacity(0.2)),
                                 child: const Text(
                                   'Lunas',
                                   style: TextStyle(
@@ -89,7 +88,7 @@ Widget cardPrson({required context, required Person person, required int cardNum
                                       fontWeight: FontWeight.w500),
                                 ))
                             : Text(
-                                '- Rp${NumberFormater.numFormat(int.parse(person.notPaid))}',
+                                '- ${NumberFormater.numFormat(int.parse(person.notPaid))}',
                                 style: const TextStyle(
                                     fontSize: 13,
                                     color: Colors.red,
@@ -100,24 +99,14 @@ Widget cardPrson({required context, required Person person, required int cardNum
 
                 const Spacer(),
                 SizedBox(
-                    width: 120,
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Rp ',
-                          style: TextStyle( fontSize: 12),
-                        ),
-                        Text(
-                          NumberFormater.numFormat(int.parse(person.paid)),
-                          
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    )),
-                
+                  width: 120,
+                  child: Text(
+                    NumberFormater.numFormat(int.parse(person.paid)),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
               ],
             ),
           ),

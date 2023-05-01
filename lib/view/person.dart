@@ -73,7 +73,7 @@ class _PersonPageState extends State<PersonPage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Rp${NumberFormater.numFormat(int.parse(widget.person.paid))}',
+                                  NumberFormater.numFormat(int.parse(widget.person.paid)),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 26,
