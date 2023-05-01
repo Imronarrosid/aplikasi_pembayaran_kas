@@ -4,8 +4,9 @@ import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
+import 'package:pembayaran_kas/formater/date_format.dart';
 import 'package:pembayaran_kas/model/payment.dart';
-import 'package:pembayaran_kas/number_formater/number_format.dart';
+import 'package:pembayaran_kas/formater/number_format.dart';
 import 'package:pembayaran_kas/view/create_cash_out.dart';
 import 'package:pembayaran_kas/view/create_payment.dart';
 import 'package:pembayaran_kas/view/show_card.dart';
@@ -44,6 +45,7 @@ class _HomeState extends State<Home> {
         .merge(const TextStyle(color: Colors.white));
     late String paymentName = Payment.getName();
     var dateFormat = DateFormat('yyyy-MM-dd');
+    var dateFormatNow = DateFormat('EEEE, d MMMM yyyy','id_ID');
     Future<int> isTableEmpty() async {
       final db = await DatabaseHelper.instance.database;
 
@@ -68,15 +70,21 @@ class _HomeState extends State<Home> {
               child: ListView(shrinkWrap: true, children: [
                 SafeArea(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(vertical:10,horizontal: 15),
                     alignment: Alignment.centerLeft,
-                    height: 80,
+                    height: 70,
                     child: Entry.offset(
                       yOffset: -1000,
                       delay: const Duration(milliseconds: 100),
-                      child: Text(
-                        'Catatan',
-                        style: Theme.of(context).textTheme.headlineSmall,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Pembaran Kas',
+                            style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                          ),
+                          Text(dateFormatNow.format(DateTime.now()))
+                        ],
                       ),
                     ),
                   ),

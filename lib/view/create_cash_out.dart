@@ -4,7 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/model/cash_out_model.dart';
-import 'package:pembayaran_kas/number_formater/number_format.dart';
+import 'package:pembayaran_kas/formater/number_format.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
 import '../model/payment.dart';
