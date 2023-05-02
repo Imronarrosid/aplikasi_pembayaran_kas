@@ -20,8 +20,8 @@ class PersonPage extends StatefulWidget {
 }
 
 class _PersonPageState extends State<PersonPage> {
-    TextEditingController paidController =
-        TextEditingController(text: initialValue.toString());
+  TextEditingController paidController =
+      TextEditingController(text: initialValue.toString());
   static int initialValue = 0;
   bool isEmpty = true;
 
@@ -41,8 +41,6 @@ class _PersonPageState extends State<PersonPage> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     paidController.selection =
@@ -54,7 +52,7 @@ class _PersonPageState extends State<PersonPage> {
         isActive = false;
         print(StartButtonController.getState());
       });
-    } else if (paidController.text != '0' &&
+    } else if (paidController.text != '0' && paidController.text.isNotEmpty &&
         StartButtonController.getState() == true) {
       setState(() {
         isActive = true;
@@ -155,7 +153,8 @@ class _PersonPageState extends State<PersonPage> {
                                               if (initialValue > 0) {
                                                 initialValue -=
                                                     Payment.getAmount();
-                                                     paidController.text= initialValue.toString();
+                                                paidController.text =
+                                                    initialValue.toString();
                                               }
                                             });
                                           },
@@ -192,7 +191,7 @@ class _PersonPageState extends State<PersonPage> {
                                               return null;
                                             },
                                             style:
-                                                const TextStyle(fontSize: 20),
+                                                const TextStyle(fontSize: 16),
                                             textAlign: TextAlign.center,
                                             decoration: const InputDecoration(
                                               contentPadding:
@@ -205,7 +204,7 @@ class _PersonPageState extends State<PersonPage> {
                                               if (value.runtimeType == int)
                                                 initialValue = int.parse(value),
                                               print(value),
-                                              paidController.text= value,
+                                              paidController.text = value,
                                               paidController.selection =
                                                   TextSelection.collapsed(
                                                       offset: paidController
@@ -213,6 +212,14 @@ class _PersonPageState extends State<PersonPage> {
                                             },
                                             onSaved: (value) {
                                               initialValue = int.parse(value!);
+                                            },
+                                            onTap: () {
+                                              setState(() {
+                                                if (paidController.text ==
+                                                    '0') {
+                                                  paidController.text = '';
+                                                }
+                                              });
                                             },
                                           ),
                                         ),
@@ -226,7 +233,8 @@ class _PersonPageState extends State<PersonPage> {
                                             setState(() {
                                               initialValue +=
                                                   Payment.getAmount();
-                                                  paidController.text= initialValue.toString();
+                                              paidController.text =
+                                                  initialValue.toString();
                                             });
                                             print(initialValue);
                                           }),
@@ -356,8 +364,9 @@ class _PersonPageState extends State<PersonPage> {
                                       ? isEmpty
                                           ? const SizedBox(
                                               height: 300,
-                                              child:
-                                                  Center(child: Text('Belum ada pembayaran')),
+                                              child: Center(
+                                                  child: Text(
+                                                      'Belum ada pembayaran')),
                                             )
                                           : ListView.builder(
                                               physics:
