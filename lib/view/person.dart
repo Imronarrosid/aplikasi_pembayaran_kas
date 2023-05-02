@@ -20,6 +20,8 @@ class PersonPage extends StatefulWidget {
 }
 
 class _PersonPageState extends State<PersonPage> {
+    TextEditingController paidController =
+        TextEditingController(text: initialValue.toString());
   static int initialValue = 0;
   bool isEmpty = true;
 
@@ -43,8 +45,6 @@ class _PersonPageState extends State<PersonPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController paidController =
-        TextEditingController(text: initialValue.toString());
     paidController.selection =
         TextSelection.collapsed(offset: paidController.text.length);
     double secreenWidth = MediaQuery.of(context).size.width;
@@ -204,6 +204,7 @@ class _PersonPageState extends State<PersonPage> {
                                               if (value.runtimeType == int)
                                                 initialValue = int.parse(value),
                                               print(value),
+                                              paidController.text= value,
                                               paidController.selection =
                                                   TextSelection.collapsed(
                                                       offset: paidController
