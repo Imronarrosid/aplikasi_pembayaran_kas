@@ -157,9 +157,9 @@ class _HomeState extends State<Home> {
                                                               .getState())
                                                           ? OutlinedButton(
                                                               style: OutlinedButton.styleFrom(
-                                                                  side: BorderSide(
-                                                                      color: Theme.of(context)
-                                                                          .primaryColor,
+                                                                foregroundColor: const Color(0xFFF7444E),
+                                                                  side: const BorderSide(
+                                                                      color: Color(0xFFF7444E),
                                                                       width: 1),
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius: BorderRadius.circular(
