@@ -15,54 +15,66 @@ Future<void> stopPaymentDialog(BuildContext context) async {
         titlePadding: EdgeInsets.zero,
         title: Container(
           height: 50,
-          color: Theme.of(context).colorScheme.primary,
+          color: const Color(0xFFF7444E),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
           child: const Text('Selesaikan Kas',style: TextStyle(color: Colors.white),)),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const <Widget>[
-              Text('Pastikan tidak ada pembayaran lagi untuk hari ini'),
+            children:  <Widget>[
+              const Text('Pastikan tidak ada pembayaran lagi untuk sesi pembayaran hari ini',style: TextStyle(fontSize: 16),),
+              const SizedBox(height: 25,),
+              Row(
+                children: [
+                  Expanded(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: double.infinity),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF7444E)
+                ),
+                child: const Text('Selesai'),
+                onPressed: () async {
+                  await StartButtonController().falseState();
+                  await resetNotPaid();
+                  if (context.mounted) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RootPage()),
+                        (route) => false);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Pembayaran diselesaikan')),
+                    );
+                    Notif.cacelSingleNotification();
+                  }
+                },
+              ),
+            ),
+          ),
+          const SizedBox(width: 10,),
+          Expanded(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: double.infinity),
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFFF7444E),
+                  side: const BorderSide(
+                    color: Color(0xFFF7444E)
+                  )
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Batal'),
+              ),
+            ),
+          ),
+                ],
+              )
             ],
           ),
         ),
         actionsPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
-        actions: <Widget>[
-          ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: double.infinity),
-            child: ElevatedButton(
-              child: const Text('Selesai'),
-              onPressed: () async {
-                await StartButtonController().falseState();
-                await resetNotPaid();
-                if (context.mounted) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RootPage()),
-                      (route) => false);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Pembayaran diselesaikan')),
-                  );
-                  Notif.cacelSingleNotification();
-                }
-              },
-            ),
-          ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: double.infinity),
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.primary
-                )
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Batal'),
-            ),
-          ),
-        ],
       );
     },
   );
