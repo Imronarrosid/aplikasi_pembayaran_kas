@@ -6,7 +6,6 @@ import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
-import 'package:pembayaran_kas/view/not_started_dialog.dart';
 import 'package:pembayaran_kas/view/person.dart';
 
 Widget cardPrson(
