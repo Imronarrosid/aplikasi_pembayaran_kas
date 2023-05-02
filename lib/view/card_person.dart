@@ -21,16 +21,16 @@ Widget cardPrson(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
         child: Bounceable(
           onTap: () {
-            if (StartButtonController.getState()) {
+            // if (StartButtonController.getState()) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: ((contex) => PersonPage(
                             person: person,
                           ))));
-            } else {
-              notStartedDialog(context);
-            }
+            // } else {
+            //   notStartedDialog(context);
+            // }
           },
           child: Card(
             shape:

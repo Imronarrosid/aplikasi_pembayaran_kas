@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
+import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/model/person_payment_model.dart';
@@ -18,21 +19,43 @@ class PersonPage extends StatefulWidget {
 }
 
 class _PersonPageState extends State<PersonPage> {
+  static int initialValue = 0;
+
   static int paid = Payment.getAmount();
+  late bool isActive;
   final _formKey = GlobalKey<FormState>();
   @override
+  void initState() {
+    isActive = StartButtonController.getState();
+
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    paid = Payment.getAmount();
+    initialValue = 0;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     TextEditingController paidController =
-        TextEditingController(text: paid.toString());
+        TextEditingController(text: initialValue.toString());
     paidController.selection =
         TextSelection.collapsed(offset: paidController.text.length);
     double secreenWidth = MediaQuery.of(context).size.width;
+
+    if (paidController.text == '0') {
+      setState(() {
+        isActive = false;
+        print(StartButtonController.getState());
+      });
+    } else if (paidController.text != '0' &&
+        StartButtonController.getState() == true) {
+      setState(() {
+        isActive = true;
+      });
+    }
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -73,7 +96,8 @@ class _PersonPageState extends State<PersonPage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  NumberFormater.numFormat(int.parse(widget.person.paid)),
+                                  NumberFormater.numFormat(
+                                      int.parse(widget.person.paid)),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 26,
@@ -124,8 +148,9 @@ class _PersonPageState extends State<PersonPage> {
                                               minimumSize: const Size(50, 50)),
                                           onPressed: () {
                                             setState(() {
-                                              if (paid > 0) {
-                                                paid -= Payment.getAmount();
+                                              if (initialValue > 0) {
+                                                initialValue -=
+                                                    Payment.getAmount();
                                               }
                                             });
                                           },
@@ -149,28 +174,40 @@ class _PersonPageState extends State<PersonPage> {
                                           ),
                                           width: secreenWidth - 180,
                                           child: TextFormField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              controller: paidController,
-                                              textAlignVertical:
-                                                  TextAlignVertical.center,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Form tidak boleh kosong';
-                                                }
-                                                return null;
-                                              },
-                                              style:
-                                                  const TextStyle(fontSize: 20),
-                                              textAlign: TextAlign.center,
-                                              decoration: const InputDecoration(
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        vertical: 12,
-                                                        horizontal: 10),
-                                                hintText: 'Masukan Nominal',
-                                              )),
+                                            keyboardType: TextInputType.number,
+                                            controller: paidController,
+                                            textAlignVertical:
+                                                TextAlignVertical.center,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty ||
+                                                  value == '0') {
+                                                return 'Form tidak boleh kosong';
+                                              }
+                                              return null;
+                                            },
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 12,
+                                                      horizontal: 10),
+                                              hintText: 'Masukan Nominal',
+                                            ),
+                                            onChanged: (value) => {
+                                              if(value.runtimeType == int)initialValue = int.parse(value),
+                                              print(value),
+                                              paidController.selection =
+                                                  TextSelection.collapsed(
+                                                      offset: paidController
+                                                          .text.length)
+                                            },
+                                            onSaved: (value) {
+                                              initialValue = int.parse(value!);
+                                            },
+                                          ),
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -180,8 +217,10 @@ class _PersonPageState extends State<PersonPage> {
                                               minimumSize: const Size(50, 50)),
                                           onPressed: (() {
                                             setState(() {
-                                              paid += Payment.getAmount();
+                                              initialValue +=
+                                                  Payment.getAmount();
                                             });
+                                            print(initialValue);
                                           }),
                                           color: Theme.of(context)
                                               .colorScheme
@@ -222,47 +261,62 @@ class _PersonPageState extends State<PersonPage> {
                                                 minimumSize: const Size(
                                                     double.infinity, 35),
                                               ),
-                                              onPressed: () async {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  int paidResult = int.parse(
-                                                          widget.person.paid) +
-                                                      int.parse(
-                                                          paidController.text);
-                                                  int notPaidd = int.parse(
-                                                          widget
-                                                              .person.notPaid) -
-                                                      int.parse(
-                                                          paidController.text);
+                                              onPressed: !isActive
+                                                  ? null
+                                                  : () async {
+                                                      if (_formKey.currentState!
+                                                          .validate()) {
+                                                        int paidResult = int
+                                                                .parse(widget
+                                                                    .person
+                                                                    .paid) +
+                                                            int.parse(
+                                                                paidController
+                                                                    .text);
+                                                        int notPaidd = int
+                                                                .parse(widget
+                                                                    .person
+                                                                    .notPaid) -
+                                                            int.parse(
+                                                                paidController
+                                                                    .text);
 
-                                                  int notPaidResult =
-                                                      notPaidd <= 0
-                                                          ? 0
-                                                          : notPaidd;
+                                                        int notPaidResult =
+                                                            notPaidd <= 0
+                                                                ? 0
+                                                                : notPaidd;
 
-                                                  Person person = Person(
-                                                      id: widget.person.id,
-                                                      name: widget.person.name,
-                                                      notPaid: notPaidResult
-                                                          .abs()
-                                                          .toString(),
-                                                      paid:
-                                                          paidResult.toString(),
-                                                      createdAt: DateTime.now()
-                                                          .toString());
-                                                  await DatabaseHelper.instance
-                                                      .update(person);
-                                                  Payment.setCashIn(int.parse(
-                                                      paidController.text));
-                                                  if (context.mounted) {
-                                                    paidDialog(
-                                                        context,
-                                                        person.name,
-                                                        paidController.text);
-                                                  }
-                                                  setState(() {});
-                                                }
-                                              },
+                                                        Person person = Person(
+                                                            id: widget
+                                                                .person.id,
+                                                            name: widget
+                                                                .person.name,
+                                                            notPaid:
+                                                                notPaidResult
+                                                                    .abs()
+                                                                    .toString(),
+                                                            paid: paidResult
+                                                                .toString(),
+                                                            createdAt: DateTime
+                                                                    .now()
+                                                                .toString());
+                                                        await DatabaseHelper
+                                                            .instance
+                                                            .update(person);
+                                                        Payment.setCashIn(
+                                                            int.parse(
+                                                                paidController
+                                                                    .text));
+                                                        if (context.mounted) {
+                                                          paidDialog(
+                                                              context,
+                                                              person.name,
+                                                              paidController
+                                                                  .text);
+                                                        }
+                                                        setState(() {});
+                                                      }
+                                                    },
                                               child: const Text('Bayar')),
                                         ),
                                       ],
@@ -328,7 +382,9 @@ class _PersonPageState extends State<PersonPage> {
                                                         ],
                                                       ),
                                                       const Spacer(),
-                                                      Text(NumberFormater.numFormat(item.amount)
+                                                      Text(NumberFormater
+                                                              .numFormat(
+                                                                  item.amount)
                                                           .toString()),
                                                     ],
                                                   )),
@@ -405,7 +461,8 @@ paidDialog(context, person, amount) {
               constraints: const BoxConstraints(minWidth: double.infinity),
               child: ElevatedButton(
                   onPressed: () {
-                    var formatter = DateFormat('EEEE, d MMMM yyyy - hh:mm','id_ID');
+                    var formatter =
+                        DateFormat('EEEE, d MMMM yyyy - hh:mm', 'id_ID');
 
                     PersonPayment payment = PersonPayment(
                         name: person,
