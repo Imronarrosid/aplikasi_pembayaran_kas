@@ -8,6 +8,7 @@ import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/model/person_payment_model.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
+import 'package:sqflite/sqflite.dart';
 import 'home.dart';
 
 class PersonPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   static int initialValue = 0;
+  bool isEmpty = true;
 
   static int paid = Payment.getAmount();
   late bool isActive;
@@ -36,6 +38,8 @@ class _PersonPageState extends State<PersonPage> {
     initialValue = 0;
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +201,8 @@ class _PersonPageState extends State<PersonPage> {
                                               hintText: 'Masukan Nominal',
                                             ),
                                             onChanged: (value) => {
-                                              if(value.runtimeType == int)initialValue = int.parse(value),
+                                              if (value.runtimeType == int)
+                                                initialValue = int.parse(value),
                                               print(value),
                                               paidController.selection =
                                                   TextSelection.collapsed(
@@ -340,58 +345,73 @@ class _PersonPageState extends State<PersonPage> {
                                 future: DatabaseHelper.instance
                                     .getPaymentByName(widget.person.name),
                                 builder: (_, snapshot) {
+                                  if (snapshot.hasData) {
+                                    final dataLength = snapshot.data!.length;
+                                    isEmpty = dataLength == 0;
+                                  }
                                   return snapshot.hasData
-                                      ? ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (_, index) {
-                                            var item = snapshot.data![index];
-                                            return Card(
-                                              child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  height: 60,
-                                                  child: Row(
-                                                    children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                      ? isEmpty
+                                          ? const SizedBox(
+                                              height: 300,
+                                              child:
+                                                  Center(child: Text('Belum ada pembayaran')),
+                                            )
+                                          : ListView.builder(
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (_, index) {
+                                                var item =
+                                                    snapshot.data![index];
+                                                return Card(
+                                                  child: Container(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10),
+                                                      height: 60,
+                                                      child: Row(
                                                         children: [
-                                                          const Text(
-                                                            'Membayar',
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Text(
+                                                                'Membayar',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              Text(
+                                                                item.createdAt
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                        .black54),
+                                                              )
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            item.createdAt
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .black54),
-                                                          )
+                                                          const Spacer(),
+                                                          Text(NumberFormater
+                                                                  .numFormat(item
+                                                                      .amount)
+                                                              .toString()),
                                                         ],
-                                                      ),
-                                                      const Spacer(),
-                                                      Text(NumberFormater
-                                                              .numFormat(
-                                                                  item.amount)
-                                                          .toString()),
-                                                    ],
-                                                  )),
-                                            );
-                                          },
-                                        )
-                                      : Container();
+                                                      )),
+                                                );
+                                              },
+                                            )
+                                      : const Center(
+                                          child: CircularProgressIndicator
+                                              .adaptive(),
+                                        );
                                 })
                           ],
                         ),
