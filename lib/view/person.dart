@@ -155,6 +155,7 @@ class _PersonPageState extends State<PersonPage> {
                                               if (initialValue > 0) {
                                                 initialValue -=
                                                     Payment.getAmount();
+                                                     paidController.text= initialValue.toString();
                                               }
                                             });
                                           },
@@ -225,6 +226,7 @@ class _PersonPageState extends State<PersonPage> {
                                             setState(() {
                                               initialValue +=
                                                   Payment.getAmount();
+                                                  paidController.text= initialValue.toString();
                                             });
                                             print(initialValue);
                                           }),
