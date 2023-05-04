@@ -68,7 +68,7 @@ Widget cardPrson(
                         const SizedBox(
                           height: 2,
                         ),
-                        (int.parse(person.notPaid) == 0 &&
+                        (int.parse(person.notPaid) == 0 ||
                                 int.parse(person.paid) -
                                         Payment.getHaveToPaid() >=
                                     0)

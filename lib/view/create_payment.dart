@@ -13,6 +13,7 @@ class CreatePayment extends StatefulWidget {
 }
 
 class _CreatePaymentState extends State<CreatePayment> {
+  bool isActive = true;
   TextEditingController nameController = TextEditingController(
       text: (Payment.getName() != null) ? Payment.getName() : null);
 
@@ -22,8 +23,36 @@ class _CreatePaymentState extends State<CreatePayment> {
   final _formKey = GlobalKey<FormState>();
 
   List<TextEditingController> form = [];
+  
+
   @override
   Widget build(BuildContext context) {
+    if (nameController.text.isEmpty || amountController.text.isEmpty) {
+      setState(() {
+        isActive = false;
+      });
+    } else if (nameController.text == Payment.getName() ||
+        amountController.text == Payment.getAmount().toString()) {
+      setState(() {
+        isActive = false;
+      });
+    }
+    if (nameController.text.isNotEmpty &&
+        nameController.text != Payment.getName()) {
+      setState(() {
+        isActive = true;
+      });
+    } else if (amountController.text.isNotEmpty &&
+        amountController.text != Payment.getAmount().toString()) {
+      setState(() {
+        isActive = true;
+      });
+    }
+    if (form.isNotEmpty){
+      setState(() {
+        isActive=true;
+      });
+    }
     double sreenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: PreferredSize(
@@ -48,44 +77,53 @@ class _CreatePaymentState extends State<CreatePayment> {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(10)),
                     minimumSize: const Size(double.infinity, 45),
                     maximumSize: const Size(double.infinity, 45)),
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    //execute whwn paymen name null
+                onPressed: isActive
+                    ? () async {
+                        if (_formKey.currentState!.validate()) {
+                          //execute whwn paymen name null
 
-                    if (Payment.getName() == null) {
-                      Payment.setPaymentName(nameController.text);
+                          if (Payment.getName() == null ||
+                              nameController.text != Payment.getName()) {
+                            Payment.setPaymentName(nameController.text);
 
-                      Payment.setAmount(int.parse(amountController.text));
+                            Payment.setHaveToPaid(
+                                int.parse(amountController.text));
+                          }
+                          if (Payment.getAmount() == 0 ||
+                              amountController.text !=
+                                  Payment.getAmount().toString()) {
+                            Payment.setAmount(int.parse(amountController.text));
 
-                      Payment.setHaveToPaid(int.parse(amountController.text));
-                    }
+                            Payment.setHaveToPaid(
+                                int.parse(amountController.text));
+                          }
+                          //looping for add person to database
 
-                    //looping for add person to database
+                          for (int i = 0; i < form.length; i++) {
+                            var item = form[i];
 
-                    for (int i = 0; i < form.length; i++) {
-                      var item = form[i];
+                            Person person = Person(
+                                name: item.text,
+                                paid: '0',
+                                notPaid: Payment.getHaveToPaid().toString(),
+                                createdAt: DateTime.now().toString());
 
-                      Person person = Person(
-                          name: item.text,
-                          paid: '0',
-                          notPaid: Payment.getHaveToPaid().toString(),
-                          createdAt: DateTime.now().toString());
+                            await DatabaseHelper.instance.add(person);
+                          }
 
-                      await DatabaseHelper.instance.add(person);
-                    }
-
-                    if (context.mounted) {
-                      Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                              builder: (context) => const RootPage()),
-                          ((route) => false));
-                    }
-                  }
-                },
+                          if (context.mounted) {
+                            Navigator.pushAndRemoveUntil<dynamic>(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                    builder: (context) => const RootPage()),
+                                ((route) => false));
+                          }
+                        }
+                      }
+                    : null,
                 child: const Text('Simpan')),
           ),
         )
@@ -124,6 +162,14 @@ class _CreatePaymentState extends State<CreatePayment> {
                               borderRadius: BorderRadius.circular(5)),
                           child: TextFormField(
                             controller: nameController,
+                            onChanged: (value) {
+                              setState(() {
+                                nameController.text = value;
+                                nameController.selection =
+                                    TextSelection.collapsed(
+                                        offset: nameController.text.length);
+                              });
+                            },
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -175,6 +221,14 @@ class _CreatePaymentState extends State<CreatePayment> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black54),
+                              onChanged: (value) {
+                                setState(() {
+                                  amountController.text = value;
+                                  amountController.selection =
+                                      TextSelection.collapsed(
+                                          offset: amountController.text.length);
+                                });
+                              },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Form tidak boleh kosong';
