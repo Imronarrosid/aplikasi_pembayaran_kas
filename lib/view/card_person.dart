@@ -90,7 +90,7 @@ Widget cardPrson(
                                 '- ${NumberFormater.numFormat(int.parse(person.notPaid))}',
                                 style: const TextStyle(
                                     fontSize: 13,
-                                    color: Colors.red,
+                                    color: Color(0xFFF7444E),
                                     fontWeight: FontWeight.w500),
                               ),
                       ],
