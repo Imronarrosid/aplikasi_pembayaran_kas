@@ -43,8 +43,6 @@ class _PersonPageState extends State<PersonPage> {
 
   @override
   Widget build(BuildContext context) {
-    paidController.selection =
-        TextSelection.collapsed(offset: paidController.text.length);
     double secreenWidth = MediaQuery.of(context).size.width;
 
     if (paidController.text == '0') {
@@ -52,7 +50,8 @@ class _PersonPageState extends State<PersonPage> {
         isActive = false;
         print(StartButtonController.getState());
       });
-    } else if (paidController.text != '0' && paidController.text.isNotEmpty &&
+    } else if (paidController.text != '0' &&
+        paidController.text.isNotEmpty &&
         StartButtonController.getState() == true) {
       setState(() {
         isActive = true;
@@ -200,15 +199,32 @@ class _PersonPageState extends State<PersonPage> {
                                                       horizontal: 10),
                                               hintText: 'Masukan Nominal',
                                             ),
-                                            onChanged: (value) => {
-                                              if (value.runtimeType == int)
-                                                initialValue = int.parse(value),
-                                              print(value),
-                                              paidController.text = value,
-                                              paidController.selection =
-                                                  TextSelection.collapsed(
-                                                      offset: paidController
-                                                          .text.length)
+                                            onChanged: (value) {
+                                              initialValue = int.parse(value);
+                                              int baseOffset = paidController
+                                                  .selection.baseOffset;
+                                              if (value.length <
+                                                  paidController.text.length) {
+                                                paidController.selection =
+                                                    TextSelection.collapsed(
+                                                        offset: baseOffset);
+                                                paidController.text = value;
+                                              }
+                                              // setState(() {
+                                              //   if (value.length >
+                                              //       paidController
+                                              //           .text.length || value != paidController.text) {
+                                              //     int offset = baseOffset -
+                                              //         paidController
+                                              //             .text.length -
+                                              //         value.length;
+                                              //         print('offset $offset');
+                                              //     paidController.selection =
+                                              //         TextSelection.collapsed(
+                                              //             offset: offset);
+                                              //     paidController.text = value;
+                                              //   }
+                                              // });
                                             },
                                             onSaved: (value) {
                                               initialValue = int.parse(value!);
@@ -233,8 +249,16 @@ class _PersonPageState extends State<PersonPage> {
                                             setState(() {
                                               initialValue +=
                                                   Payment.getAmount();
-                                              paidController.text =
-                                                  initialValue.toString();
+                                              int baseOffset = paidController
+                                                  .selection.baseOffset;
+                                              if (initialValue.toString() !=
+                                                  paidController.text) {
+                                                paidController.text =
+                                                    initialValue.toString();
+                                                paidController.selection =
+                                                    TextSelection.collapsed(
+                                                        offset: baseOffset);
+                                              }
                                             });
                                             print(initialValue);
                                           }),

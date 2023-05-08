@@ -23,11 +23,10 @@ class _CreatePaymentState extends State<CreatePayment> {
   final _formKey = GlobalKey<FormState>();
 
   List<TextEditingController> form = [];
-  
 
   @override
   Widget build(BuildContext context) {
-    if (nameController.text.isEmpty || amountController.text.isEmpty) {
+    if (nameController.text.isEmpty && amountController.text.isEmpty) {
       setState(() {
         isActive = false;
       });
@@ -38,19 +37,21 @@ class _CreatePaymentState extends State<CreatePayment> {
       });
     }
     if (nameController.text.isNotEmpty &&
+        amountController.text.isNotEmpty &&
         nameController.text != Payment.getName()) {
       setState(() {
         isActive = true;
       });
     } else if (amountController.text.isNotEmpty &&
+        nameController.text.isNotEmpty &&
         amountController.text != Payment.getAmount().toString()) {
       setState(() {
         isActive = true;
       });
     }
-    if (form.isNotEmpty){
+    if (form.isNotEmpty) {
       setState(() {
-        isActive=true;
+        isActive = true;
       });
     }
     double sreenWidth = MediaQuery.of(context).size.width;
@@ -164,16 +165,16 @@ class _CreatePaymentState extends State<CreatePayment> {
                             controller: nameController,
                             onChanged: (value) {
                               setState(() {
-                                nameController.text = value;
-                                nameController.selection =
-                                    TextSelection.collapsed(
-                                        offset: nameController.text.length);
+                                int baseOffset =
+                                    nameController.selection.baseOffset;
+                                if (value.length < nameController.text.length) {
+                                  nameController.selection =
+                                      TextSelection.collapsed(
+                                          offset: baseOffset);
+                                  nameController.text = value;
+                                }
                               });
                             },
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Form tidak boleh kosong';
@@ -217,16 +218,23 @@ class _CreatePaymentState extends State<CreatePayment> {
                           child: TextFormField(
                               controller: amountController,
                               keyboardType: TextInputType.number,
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54),
                               onChanged: (value) {
                                 setState(() {
-                                  amountController.text = value;
-                                  amountController.selection =
-                                      TextSelection.collapsed(
-                                          offset: amountController.text.length);
+                                  int baseOffset =
+                                      amountController.selection.baseOffset;
+                                  print(baseOffset);
+                                  if (value.length <
+                                      amountController.text.length) {
+                                    int offset = baseOffset -
+                                        amountController.text.length -
+                                        value.length;
+                                    amountController.selection =
+                                        TextSelection.collapsed(offset: offset);
+                                    amountController.text = value;
+                                  }
+                                  // amountController.selection =
+                                  //     TextSelection.collapsed(
+                                  //         offset: amountController.text.length);
                                 });
                               },
                               validator: (value) {
@@ -234,6 +242,11 @@ class _CreatePaymentState extends State<CreatePayment> {
                                   return 'Form tidak boleh kosong';
                                 }
                                 return null;
+                              },
+                              onTap: () {
+                                var baseOffset =
+                                    amountController.selection.baseOffset;
+                                print(baseOffset);
                               },
                               decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.only(left: 10),
