@@ -18,15 +18,16 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int selectedIndex=0;
   List<Widget> listScreen=[
-    Home(),
-    CreatePayment(),
-    CashOutPage()
+    const Home(),
+    const CreatePayment(),
+    const CashOutPage()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Entry.offset(
         child: BottomNavigationBar(
+          elevation: 0,
           backgroundColor: Colors.white,
           unselectedItemColor: Theme.of(context).colorScheme.primary,
           currentIndex: selectedIndex,

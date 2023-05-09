@@ -7,6 +7,7 @@ import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/formater/date_format.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
+import 'package:pembayaran_kas/screen/search_page.dart';
 import 'package:pembayaran_kas/view/create_cash_out.dart';
 import 'package:pembayaran_kas/view/create_payment.dart';
 import 'package:pembayaran_kas/view/show_card.dart';
@@ -131,6 +132,7 @@ class _HomeState extends State<Home> {
                                                   .textTheme
                                                   .displayLarge!
                                                   .merge(const TextStyle(
+                                                    fontSize: 24,
                                                       color: Colors.black87)),
                                         
                                         ),
@@ -190,6 +192,7 @@ class _HomeState extends State<Home> {
                                                               })
                                                           : ElevatedButton(
                                                               style: ElevatedButton.styleFrom(
+                                                                elevation: 0,
                                                                   backgroundColor: Theme.of(context).colorScheme.primary,
                                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                                                                   minimumSize: const Size(110, 15),
@@ -220,67 +223,69 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: 35,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text('Pemasukan',
-                                                style: title1.merge(
-                                                    const TextStyle(
-                                                        color:
-                                                            Colors.black87))),
-                                            const Icon(Icons.add,
-                                                size: 16,
-                                                color: Colors.black87),
-                                          ],
-                                        ),Text(
-                                              NumberFormater.numFormat(
-                                                  Payment.getCashIn()),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .merge(const TextStyle(
-                                                      color: Colors.black87)),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: 1.2,
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.black87,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(50),
-                                              bottom: Radius.circular(50))),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text('Pengeluaran',
-                                                style: title1.merge(
-                                                    const TextStyle(
-                                                        color:
-                                                            Colors.black87))),
-                                            const Icon(Icons.remove,
-                                                size: 16,
-                                                color: Colors.black87),
+                                            Row(
+                                              children: [
+                                                Text('Pemasukan',
+                                                    style: title1.merge(
+                                                        const TextStyle(
+                                                            color:
+                                                                Colors.black87))),
+                                                const Icon(Icons.add,
+                                                    size: 16,
+                                                    color: Colors.black87),
+                                              ],
+                                            ),Text(
+                                                  NumberFormater.numFormat(
+                                                      Payment.getCashIn()),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .displayLarge!
+                                                      .merge(const TextStyle(
+                                                          color: Colors.black87)),
+                                            ),
                                           ],
                                         ),
-                                            Text(
-                                              NumberFormater.numFormat(
-                                                  Payment.getCashOut()),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .merge(const TextStyle(
-                                                      color: Colors.black87)),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        height: 35,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text('Pengeluaran',
+                                                    style: title1.merge(
+                                                        const TextStyle(
+                                                            color:
+                                                                Colors.black87))),
+                                                const Icon(Icons.remove,
+                                                    size: 16,
+                                                    color: Colors.black87),
+                                              ],
+                                            ),
+                                                Text(
+                                                  NumberFormater.numFormat(
+                                                      Payment.getCashOut()),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .displayLarge!
+                                                      .merge(const TextStyle(
+                                                          color: Colors.black87)),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ],
                                 )
@@ -292,6 +297,30 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(
                   height: 15,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+                  },
+                  child: Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black45),
+                      borderRadius: const BorderRadius.all(Radius.circular(50))
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      children: const [
+                        Icon(IconlyBroken.search),
+                        SizedBox(width: 10,),
+                        Text(
+                          'Cari'
+                          ,style: TextStyle(color: Colors.black54,fontSize: 16),
+                        )
+                      ],
+                    )
+                  ),
                 ),
                 (Payment.getName() != null)
                     ? Entry.offset(
