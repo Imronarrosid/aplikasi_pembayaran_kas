@@ -26,11 +26,11 @@ class _PersonPageState extends State<PersonPage> {
   bool isEmpty = true;
 
   static int paid = Payment.getAmount();
-  bool isActive=false;
+  bool isActive = false;
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-      print(StartButtonController.getState());
+    print(StartButtonController.getState());
     super.initState();
   }
 
@@ -44,16 +44,19 @@ class _PersonPageState extends State<PersonPage> {
   Widget build(BuildContext context) {
     double secreenWidth = MediaQuery.of(context).size.width;
 
-    if ( paidController.text!=''&& paidController.text != '0' && StartButtonController.getState() == true && initialValue!=0) {
+    if (paidController.text != '' &&
+        paidController.text != '0' &&
+        StartButtonController.getState() == true &&
+        initialValue != 0) {
       setState(() {
         isActive = true;
         print(StartButtonController.getState());
       });
-    } else if(paidController.text==''){
+    } else if (paidController.text == '') {
       setState(() {
-        isActive =false;
+        isActive = false;
       });
-    }else if (StartButtonController.getState()==false){
+    } else if (StartButtonController.getState() == false) {
       setState(() {
         isActive = false;
       });
@@ -82,7 +85,6 @@ class _PersonPageState extends State<PersonPage> {
             child: SingleChildScrollView(
               child: Stack(
                 children: [
-                  
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       width: secreenWidth,
@@ -93,286 +95,246 @@ class _PersonPageState extends State<PersonPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Container(
-                    width: secreenWidth,
-                    height: 170,
-                    child: Center(
-                        child: Container(
-                            margin: const EdgeInsets.only(bottom: 40),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              width: secreenWidth,
+                              height: 170,
+                              child: Center(
+                                  child: Container(
+                                      margin: const EdgeInsets.only(bottom: 40),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Telah dibayar',
+                                            style: TextStyle(),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            NumberFormater.numFormat(
+                                                int.parse(widget.person.paid)),
+                                            style: const TextStyle(
+                                                fontSize: 26,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ))),
+                            ),
+                            ListView(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               children: [
                                 const Text(
-                                  'Telah dibayar',
-                                  style: TextStyle(),
+                                  'Bayar',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  NumberFormater.numFormat(
-                                      int.parse(widget.person.paid)),
-                                  style: const TextStyle(
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ))),
-                  ),
-                            ListView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  children: [
-                                    const Text(
-                                      'Bayar',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
 
-                                    //Paid form layout
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal:20.0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          IconButton(
-                                            style: ElevatedButton.styleFrom(
-                                                minimumSize: const Size(50, 50)),
-                                            onPressed: () {
-                                              setState(() {
-                                                if (initialValue > 0) {
-                                                      initialValue -=
-                                                    Payment.getAmount();
-                                              
-                                                  paidController.text =
-                                                      initialValue.toString();
-                                                  paidController.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: paidController.text.length);
-                                                } 
-                                                if (initialValue<0){
-                                                  initialValue =0;
-                                                }
-                                              });
+                                //Paid form layout
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      IconButton(
+                                        style: ElevatedButton.styleFrom(
+                                            minimumSize: const Size(50, 50)),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (initialValue > 0) {
+                                              initialValue -=
+                                                  Payment.getAmount();
+
+                                              paidController.text =
+                                                  initialValue.toString();
+                                              paidController.selection =
+                                                  TextSelection.collapsed(
+                                                      offset: paidController
+                                                          .text.length);
+                                            }
+                                            if (initialValue < 0) {
+                                              initialValue = 0;
+                                            }
+                                          });
+                                        },
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        icon: const Icon(Icons.remove),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            controller: paidController,
+                                            textAlignVertical:
+                                                TextAlignVertical.center,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty ||
+                                                  value == '0') {
+                                                return 'Form tidak boleh kosong';
+                                              }
+                                              return null;
                                             },
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            icon: const Icon(Icons.remove),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[200],
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                              ),
-                                              child: TextFormField(
-                                                keyboardType: TextInputType.number,
-                                                controller: paidController,
-                                                textAlignVertical:
-                                                    TextAlignVertical.center,
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty ||
-                                                      value == '0') {
-                                                    return 'Form tidak boleh kosong';
-                                                  }
-                                                  return null;
-                                                },
-                                                style:
-                                                    const TextStyle(fontSize: 16),
-                                                textAlign: TextAlign.center,
-                                                decoration: const InputDecoration(
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 12,
-                                                          horizontal: 10),
-                                                  hintText: 'Masukan nominal',
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    
-                                                  initialValue = value.isNotEmpty ?int.parse(value):0;
-                                                  int baseOffset = paidController
-                                                      .selection.baseOffset;
-                                                  if (value.length <
-                                                      paidController.text.length) {
-                                                    paidController.selection =
-                                                        TextSelection.collapsed(
-                                                            offset: baseOffset);
-                                                    paidController.text = value;
-                                                  }
-                                                  });
-                                                  print('$initialValue \n ${paidController.text}');
-                                                  // setState(() {
-                                                  //   if (value.length >
-                                                  //       paidController
-                                                  //           .text.length || value != paidController.text) {
-                                                  //     int offset = baseOffset -
-                                                  //         paidController
-                                                  //             .text.length -
-                                                  //         value.length;
-                                                  //         print('offset $offset');
-                                                  //     paidController.selection =
-                                                  //         TextSelection.collapsed(
-                                                  //             offset: offset);
-                                                  //     paidController.text = value;
-                                                  //   }
-                                                  // });
-                                                },
-                                                onSaved: (value) {
-                                                  initialValue = int.parse(value!);
-                                                },
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (paidController.text ==
-                                                        '0') {
-                                                      paidController.text = '';
-                                                    }
-                                                  });
-                                                },
-                                              ),
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      vertical: 12,
+                                                      horizontal: 10),
+                                              hintText: 'Masukan nominal',
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          IconButton(
-                                            style: ElevatedButton.styleFrom(
-                                                minimumSize: const Size(50, 50)),
-                                            onPressed: (() {
+                                            onChanged: (value) {
                                               setState(() {
-                                                initialValue +=
-                                                    Payment.getAmount();
+                                                initialValue = value.isNotEmpty
+                                                    ? int.parse(value)
+                                                    : 0;
                                                 int baseOffset = paidController
                                                     .selection.baseOffset;
-                                                if (initialValue.toString() !=
-                                                    paidController.text) {
-                                                  paidController.text =
-                                                      initialValue.toString();
+                                                if (value.length <
+                                                    paidController
+                                                        .text.length) {
                                                   paidController.selection =
                                                       TextSelection.collapsed(
                                                           offset: baseOffset);
+                                                  paidController.text = value;
                                                 }
                                               });
-                                              print(initialValue);
-                                            }),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            icon: const Icon(Icons.add),
+                                              print(
+                                                  '$initialValue \n ${paidController.text}');
+                                              // setState(() {
+                                              //   if (value.length >
+                                              //       paidController
+                                              //           .text.length || value != paidController.text) {
+                                              //     int offset = baseOffset -
+                                              //         paidController
+                                              //             .text.length -
+                                              //         value.length;
+                                              //         print('offset $offset');
+                                              //     paidController.selection =
+                                              //         TextSelection.collapsed(
+                                              //             offset: offset);
+                                              //     paidController.text = value;
+                                              //   }
+                                              // });
+                                            },
+                                            onSaved: (value) {
+                                              initialValue = int.parse(value!);
+                                            },
+                                            onTap: () {
+                                              setState(() {
+                                                if (paidController.text ==
+                                                    '0') {
+                                                  paidController.text = '';
+                                                }
+                                              });
+                                            },
                                           ),
-                                        ],
+                                        ),
                                       ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      IconButton(
+                                        style: ElevatedButton.styleFrom(
+                                            minimumSize: const Size(50, 50)),
+                                        onPressed: (() {
+                                          setState(() {
+                                            initialValue += Payment.getAmount();
+                                            int baseOffset = paidController
+                                                .selection.baseOffset;
+                                            if (initialValue.toString() !=
+                                                paidController.text) {
+                                              paidController.text =
+                                                  initialValue.toString();
+                                              paidController.selection =
+                                                  TextSelection.collapsed(
+                                                      offset: baseOffset);
+                                            }
+                                          });
+                                          print(initialValue);
+                                        }),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        icon: const Icon(Icons.add),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: TextButton(
+                                          style: TextButton.styleFrom(
+                                              minimumSize: const Size(
+                                                  double.infinity, 35),
+                                              side: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .primaryColor)),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Batal')),
                                     ),
                                     const SizedBox(
-                                      height: 30,
+                                      width: 10,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: TextButton(
-                                              style: TextButton.styleFrom(
-                                                  minimumSize: const Size(
-                                                      double.infinity, 35),
-                                                      side: BorderSide(color: Theme.of(context).primaryColor)
-                                                 ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text('Batal')),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 0,
-                                                minimumSize: const Size(
-                                                    double.infinity, 35),
-                                              ),
-                                              onPressed: isActive
-                                                  ? 
-                                                  () async {
-                                                      if (_formKey.currentState!
-                                                          .validate()) {
-                                                        int paidResult = int
-                                                                .parse(widget
-                                                                    .person
-                                                                    .paid) +
-                                                            int.parse(
-                                                                paidController
-                                                                    .text);
-                                                        int notPaidd = int
-                                                                .parse(widget
-                                                                    .person
-                                                                    .notPaid) -
-                                                            int.parse(
-                                                                paidController
-                                                                    .text);
-
-                                                        int notPaidResult =
-                                                            notPaidd <= 0
-                                                                ? 0
-                                                                : notPaidd;
-
-                                                        Person person = Person(
-                                                            id: widget
-                                                                .person.id,
-                                                            name: widget
-                                                                .person.name,
-                                                            notPaid:
-                                                                notPaidResult
-                                                                    .abs()
-                                                                    .toString(),
-                                                            paid: paidResult
-                                                                .toString(),
-                                                            createdAt: DateTime
-                                                                    .now()
-                                                                .toString());
-                                                        await DatabaseHelper
-                                                            .instance
-                                                            .update(person);
-                                                        Payment.setCashIn(
-                                                            int.parse(
-                                                                paidController
-                                                                    .text));
-                                                        if (context.mounted) {
-                                                          paidDialog(
-                                                              context,
-                                                              person.name,
-                                                              paidController
-                                                                  .text);
-                                                        }
-                                                        setState(() {});
-                                                      }
-                                                    }:null,
-                                              child: const Text('Bayar')),
-                                        ),
-                                      ],
-                                    )
+                                    Expanded(
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            minimumSize:
+                                                const Size(double.infinity, 35),
+                                          ),
+                                          onPressed: isActive
+                                              ? () async {
+                                                  if (_formKey.currentState!
+                                                      .validate()) {
+                                                    if (context.mounted) {
+                                                      paidDialog(
+                                                          context,
+                                                          widget.person,
+                                                          paidController.text);
+                                                    }
+                                                    setState(() {});
+                                                  }
+                                                }
+                                              : null,
+                                          child: const Text('Bayar')),
+                                    ),
                                   ],
-                                ),
-                              
-                            
+                                )
+                              ],
+                            ),
                             Container(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
@@ -409,54 +371,67 @@ class _PersonPageState extends State<PersonPage> {
                                                 var item =
                                                     snapshot.data![index];
                                                 return Container(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 10),
-                                                      height: 60,
-                                                      child: Row(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10),
+                                                  height: 60,
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                          height: 40,
+                                                          width: 40,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          100),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor
+                                                                  .withOpacity(
+                                                                      0.2)),
+                                                          child: Icon(
+                                                            IconlyBroken
+                                                                .arrow_down_3,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                          )),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
-                                                              Container(
-                                                                height: 40,
-                                                                width: 40,
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(100),
-                                                                  color: Theme.of(context).primaryColor.withOpacity(0.2)
-                                                                ),
-                                                                child: Icon(IconlyBroken.arrow_down_3 ,color: Theme.of(context).primaryColor,)),
-                                                                const SizedBox(width: 10,),
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              const Text(
-                                                                'Membayar',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                              ),
-                                                              Text(
-                                                                item.createdAt
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .black54),
-                                                              )
-                                                            ],
+                                                          const Text(
+                                                            'Membayar',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
-                                                          const Spacer(),
-                                                          Text(NumberFormater
-                                                                  .numFormat(item
-                                                                      .amount)
-                                                              .toString()),
+                                                          Text(
+                                                            item.createdAt
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .black54),
+                                                          )
                                                         ],
                                                       ),
+                                                      const Spacer(),
+                                                      Text(NumberFormater
+                                                              .numFormat(
+                                                                  item.amount)
+                                                          .toString()),
+                                                    ],
+                                                  ),
                                                 );
                                               },
                                             )
@@ -507,20 +482,19 @@ void deleteDialog(context, String person, int id) {
       });
 }
 
-paidDialog(context, person, amount) {
+paidDialog(context, Person person, amount) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           titlePadding: EdgeInsets.zero,
           actionsPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           content: SingleChildScrollView(
             child: ListBody(children: [
-              Text('Bayar kas Rp$amount "$person"'),
+              Text('"${person.name}" memayar kas Rp$amount '),
               const SizedBox(
                 height: 25,
               ),
@@ -529,15 +503,32 @@ paidDialog(context, person, amount) {
                   Expanded(
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(elevation: 0),
-                        onPressed: () {
+                        onPressed: () async {
                           var formatter =
                               DateFormat('EEEE, d MMMM yyyy - hh:mm', 'id_ID');
 
                           PersonPayment payment = PersonPayment(
-                              name: person,
+                              name: person.name,
                               amount: int.parse(amount),
                               createdAt: formatter.format(DateTime.now()));
                           DatabaseHelper.instance.addPayment(payment);
+
+                          int paidResult =
+                              int.parse(person.paid) + int.parse(amount);
+                          int notPaidd =
+                              int.parse(person.notPaid) - int.parse(amount);
+
+                          int notPaidResult = notPaidd <= 0 ? 0 : notPaidd;
+
+                          Person data = Person(
+                              id: person.id,
+                              name: person.name,
+                              notPaid: notPaidResult.abs().toString(),
+                              paid: paidResult.toString(),
+                              createdAt: DateTime.now().toString());
+                          await DatabaseHelper.instance.update(data);
+                          print(paidResult);
+                          Payment.setCashIn(int.parse(amount));
                           Navigator.pushAndRemoveUntil<dynamic>(
                               context,
                               MaterialPageRoute<dynamic>(
@@ -547,7 +538,6 @@ paidDialog(context, person, amount) {
                         child: const Text('Bayar')),
                   ),
                   Expanded(
-                   
                     child: TextButton(
                         style: TextButton.styleFrom(),
                         onPressed: () {
