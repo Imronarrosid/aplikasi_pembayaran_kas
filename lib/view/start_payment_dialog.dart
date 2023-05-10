@@ -10,11 +10,9 @@ Future<void> startPaymentDialog(BuildContext context) async {
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog( // <-- SEE HERE
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       titlePadding: EdgeInsets.zero,
-        title: Container(
-          alignment: Alignment.center,
-          height: 50, color:Theme.of(context).colorScheme.primary,
-          child: const Text('Mulai Pembayaran',style: TextStyle(color: Colors.white),)),
+       
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -25,6 +23,7 @@ Future<void> startPaymentDialog(BuildContext context) async {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         minimumSize: const Size(double.infinity, 35),
                       ),
                                 child: const Text('Mulai'),
@@ -44,10 +43,9 @@ Future<void> startPaymentDialog(BuildContext context) async {
                   ),
             const SizedBox(width: 10,),
             Expanded(
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 35),
-                  side: BorderSide(color: Theme.of(context).colorScheme.primary)
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 35)
                 ),
                 child: const Text('Batal'),
                 onPressed: () {

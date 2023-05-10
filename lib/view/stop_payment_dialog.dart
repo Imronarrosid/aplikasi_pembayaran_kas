@@ -12,13 +12,8 @@ Future<void> stopPaymentDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog(
         // <-- SEE HERE
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         titlePadding: EdgeInsets.zero,
-        title: Container(
-          height: 50,
-          color: const Color(0xFFF7444E),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          alignment: Alignment.center,
-          child: const Text('Selesaikan Kas',style: TextStyle(color: Colors.white),)),
         content: SingleChildScrollView(
           child: ListBody(
             children:  <Widget>[
@@ -31,6 +26,8 @@ Future<void> stopPaymentDialog(BuildContext context) async {
               constraints: const BoxConstraints(minWidth: double.infinity),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  padding: EdgeInsets.zero,
                   backgroundColor: const Color(0xFFF7444E)
                 ),
                 child: const Text('Selesai'),
@@ -55,12 +52,10 @@ Future<void> stopPaymentDialog(BuildContext context) async {
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(minWidth: double.infinity),
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
                   foregroundColor: const Color(0xFFF7444E),
-                  side: const BorderSide(
-                    color: Color(0xFFF7444E)
-                  )
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
