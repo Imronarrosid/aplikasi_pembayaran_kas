@@ -26,12 +26,11 @@ class _PersonPageState extends State<PersonPage> {
   bool isEmpty = true;
 
   static int paid = Payment.getAmount();
-  late bool isActive;
+  bool isActive=false;
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    isActive = StartButtonController.getState();
-
+      print(StartButtonController.getState());
     super.initState();
   }
 
@@ -45,20 +44,24 @@ class _PersonPageState extends State<PersonPage> {
   Widget build(BuildContext context) {
     double secreenWidth = MediaQuery.of(context).size.width;
 
-    if (paidController.text == '0') {
-      setState(() {
-        isActive = false;
-        print(StartButtonController.getState());
-      });
-    } else if (paidController.text != '0' &&
-        paidController.text.isNotEmpty &&
-        StartButtonController.getState() == true) {
+    if ( paidController.text!=''&& paidController.text != '0' && StartButtonController.getState() == true && initialValue!=0) {
       setState(() {
         isActive = true;
+        print(StartButtonController.getState());
+      });
+    } else if(paidController.text==''){
+      setState(() {
+        isActive =false;
+      });
+    }else if (StartButtonController.getState()==false){
+      setState(() {
+        isActive = false;
       });
     }
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
           elevation: 0,
           title: Text(widget.person.name),
           actions: [
@@ -79,34 +82,7 @@ class _PersonPageState extends State<PersonPage> {
             child: SingleChildScrollView(
               child: Stack(
                 children: [
-                  Container(
-                    width: secreenWidth,
-                    height: 200,
-                    color: Theme.of(context).colorScheme.primary,
-                    child: Center(
-                        child: Container(
-                            margin: const EdgeInsets.only(bottom: 40),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'Telah dibayar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  NumberFormater.numFormat(
-                                      int.parse(widget.person.paid)),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ))),
-                  ),
+                  
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       width: secreenWidth,
@@ -116,13 +92,33 @@ class _PersonPageState extends State<PersonPage> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
-                            const SizedBox(
-                              height: 150,
-                            ),
-                            Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: ListView(
+                            Container(
+                    width: secreenWidth,
+                    height: 170,
+                    child: Center(
+                        child: Container(
+                            margin: const EdgeInsets.only(bottom: 40),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Telah dibayar',
+                                  style: TextStyle(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  NumberFormater.numFormat(
+                                      int.parse(widget.person.paid)),
+                                  style: const TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ))),
+                  ),
+                            ListView(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   children: [
@@ -137,140 +133,154 @@ class _PersonPageState extends State<PersonPage> {
                                     ),
 
                                     //Paid form layout
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              minimumSize: const Size(50, 50)),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (initialValue > 0) {
-                                                initialValue -=
-                                                    Payment.getAmount();
-                                                paidController.text =
-                                                    initialValue.toString();
-                                              }
-                                            });
-                                          },
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          icon: const Icon(Icons.remove),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          height: 50,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[200],
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          width: secreenWidth - 180,
-                                          child: TextFormField(
-                                            keyboardType: TextInputType.number,
-                                            controller: paidController,
-                                            textAlignVertical:
-                                                TextAlignVertical.center,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty ||
-                                                  value == '0') {
-                                                return 'Form tidak boleh kosong';
-                                              }
-                                              return null;
-                                            },
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                            textAlign: TextAlign.center,
-                                            decoration: const InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 10),
-                                              hintText: 'Masukan Nominal',
-                                            ),
-                                            onChanged: (value) {
-                                              initialValue = int.parse(value);
-                                              int baseOffset = paidController
-                                                  .selection.baseOffset;
-                                              if (value.length <
-                                                  paidController.text.length) {
-                                                paidController.selection =
-                                                    TextSelection.collapsed(
-                                                        offset: baseOffset);
-                                                paidController.text = value;
-                                              }
-                                              // setState(() {
-                                              //   if (value.length >
-                                              //       paidController
-                                              //           .text.length || value != paidController.text) {
-                                              //     int offset = baseOffset -
-                                              //         paidController
-                                              //             .text.length -
-                                              //         value.length;
-                                              //         print('offset $offset');
-                                              //     paidController.selection =
-                                              //         TextSelection.collapsed(
-                                              //             offset: offset);
-                                              //     paidController.text = value;
-                                              //   }
-                                              // });
-                                            },
-                                            onSaved: (value) {
-                                              initialValue = int.parse(value!);
-                                            },
-                                            onTap: () {
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal:20.0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          IconButton(
+                                            style: ElevatedButton.styleFrom(
+                                                minimumSize: const Size(50, 50)),
+                                            onPressed: () {
                                               setState(() {
-                                                if (paidController.text ==
-                                                    '0') {
-                                                  paidController.text = '';
+                                                if (initialValue > 0) {
+                                                      initialValue -=
+                                                    Payment.getAmount();
+                                              
+                                                  paidController.text =
+                                                      initialValue.toString();
+                                                  paidController.selection =
+                                                      TextSelection.collapsed(
+                                                          offset: paidController.text.length);
+                                                } 
+                                                if (initialValue<0){
+                                                  initialValue =0;
                                                 }
                                               });
                                             },
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            icon: const Icon(Icons.remove),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              minimumSize: const Size(50, 50)),
-                                          onPressed: (() {
-                                            setState(() {
-                                              initialValue +=
-                                                  Payment.getAmount();
-                                              int baseOffset = paidController
-                                                  .selection.baseOffset;
-                                              if (initialValue.toString() !=
-                                                  paidController.text) {
-                                                paidController.text =
-                                                    initialValue.toString();
-                                                paidController.selection =
-                                                    TextSelection.collapsed(
-                                                        offset: baseOffset);
-                                              }
-                                            });
-                                            print(initialValue);
-                                          }),
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          icon: const Icon(Icons.add),
-                                        ),
-                                      ],
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[200],
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: TextFormField(
+                                                keyboardType: TextInputType.number,
+                                                controller: paidController,
+                                                textAlignVertical:
+                                                    TextAlignVertical.center,
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty ||
+                                                      value == '0') {
+                                                    return 'Form tidak boleh kosong';
+                                                  }
+                                                  return null;
+                                                },
+                                                style:
+                                                    const TextStyle(fontSize: 16),
+                                                textAlign: TextAlign.center,
+                                                decoration: const InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 12,
+                                                          horizontal: 10),
+                                                  hintText: 'Masukan nominal',
+                                                ),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    
+                                                  initialValue = value.isNotEmpty ?int.parse(value):0;
+                                                  int baseOffset = paidController
+                                                      .selection.baseOffset;
+                                                  if (value.length <
+                                                      paidController.text.length) {
+                                                    paidController.selection =
+                                                        TextSelection.collapsed(
+                                                            offset: baseOffset);
+                                                    paidController.text = value;
+                                                  }
+                                                  });
+                                                  print('$initialValue \n ${paidController.text}');
+                                                  // setState(() {
+                                                  //   if (value.length >
+                                                  //       paidController
+                                                  //           .text.length || value != paidController.text) {
+                                                  //     int offset = baseOffset -
+                                                  //         paidController
+                                                  //             .text.length -
+                                                  //         value.length;
+                                                  //         print('offset $offset');
+                                                  //     paidController.selection =
+                                                  //         TextSelection.collapsed(
+                                                  //             offset: offset);
+                                                  //     paidController.text = value;
+                                                  //   }
+                                                  // });
+                                                },
+                                                onSaved: (value) {
+                                                  initialValue = int.parse(value!);
+                                                },
+                                                onTap: () {
+                                                  setState(() {
+                                                    if (paidController.text ==
+                                                        '0') {
+                                                      paidController.text = '';
+                                                    }
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          IconButton(
+                                            style: ElevatedButton.styleFrom(
+                                                minimumSize: const Size(50, 50)),
+                                            onPressed: (() {
+                                              setState(() {
+                                                initialValue +=
+                                                    Payment.getAmount();
+                                                int baseOffset = paidController
+                                                    .selection.baseOffset;
+                                                if (initialValue.toString() !=
+                                                    paidController.text) {
+                                                  paidController.text =
+                                                      initialValue.toString();
+                                                  paidController.selection =
+                                                      TextSelection.collapsed(
+                                                          offset: baseOffset);
+                                                }
+                                              });
+                                              print(initialValue);
+                                            }),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            icon: const Icon(Icons.add),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     const SizedBox(
-                                      height: 40,
+                                      height: 30,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -278,15 +288,12 @@ class _PersonPageState extends State<PersonPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
-                                          child: OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
+                                          child: TextButton(
+                                              style: TextButton.styleFrom(
                                                   minimumSize: const Size(
                                                       double.infinity, 35),
-                                                  side: BorderSide(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .primary,
-                                                      width: 1)),
+                                                      side: BorderSide(color: Theme.of(context).primaryColor)
+                                                 ),
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
@@ -298,12 +305,13 @@ class _PersonPageState extends State<PersonPage> {
                                         Expanded(
                                           child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
+                                                elevation: 0,
                                                 minimumSize: const Size(
                                                     double.infinity, 35),
                                               ),
-                                              onPressed: !isActive
-                                                  ? null
-                                                  : () async {
+                                              onPressed: isActive
+                                                  ? 
+                                                  () async {
                                                       if (_formKey.currentState!
                                                           .validate()) {
                                                         int paidResult = int
@@ -356,15 +364,15 @@ class _PersonPageState extends State<PersonPage> {
                                                         }
                                                         setState(() {});
                                                       }
-                                                    },
+                                                    }:null,
                                               child: const Text('Bayar')),
                                         ),
                                       ],
                                     )
                                   ],
                                 ),
-                              ),
-                            ),
+                              
+                            
                             Container(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
@@ -400,14 +408,22 @@ class _PersonPageState extends State<PersonPage> {
                                               itemBuilder: (_, index) {
                                                 var item =
                                                     snapshot.data![index];
-                                                return Card(
-                                                  child: Container(
+                                                return Container(
                                                       padding: const EdgeInsets
                                                               .symmetric(
                                                           horizontal: 10),
                                                       height: 60,
                                                       child: Row(
                                                         children: [
+                                                              Container(
+                                                                height: 40,
+                                                                width: 40,
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(100),
+                                                                  color: Theme.of(context).primaryColor.withOpacity(0.2)
+                                                                ),
+                                                                child: Icon(IconlyBroken.arrow_down_3 ,color: Theme.of(context).primaryColor,)),
+                                                                const SizedBox(width: 10,),
                                                           Column(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -440,7 +456,7 @@ class _PersonPageState extends State<PersonPage> {
                                                                       .amount)
                                                               .toString()),
                                                         ],
-                                                      )),
+                                                      ),
                                                 );
                                               },
                                             )
@@ -496,55 +512,54 @@ paidDialog(context, person, amount) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15)
+          ),
           titlePadding: EdgeInsets.zero,
           actionsPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          title: Container(
-              alignment: Alignment.center,
-              height: 50,
-              color: Theme.of(context).colorScheme.primary,
-              child: const Text(
-                'Konfirmasi',
-                style: TextStyle(color: Colors.white),
-              )),
           content: SingleChildScrollView(
-            child: ListBody(
-                children: [Text('Yakin bayar Rp$amount dari "$person"')]),
+            child: ListBody(children: [
+              Text('Bayar kas Rp$amount "$person"'),
+              const SizedBox(
+                height: 25,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(elevation: 0),
+                        onPressed: () {
+                          var formatter =
+                              DateFormat('EEEE, d MMMM yyyy - hh:mm', 'id_ID');
+
+                          PersonPayment payment = PersonPayment(
+                              name: person,
+                              amount: int.parse(amount),
+                              createdAt: formatter.format(DateTime.now()));
+                          DatabaseHelper.instance.addPayment(payment);
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                              context,
+                              MaterialPageRoute<dynamic>(
+                                  builder: (context) => const RootPage()),
+                              ((route) => false));
+                        },
+                        child: const Text('Bayar')),
+                  ),
+                  Expanded(
+                   
+                    child: TextButton(
+                        style: TextButton.styleFrom(),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Batal')),
+                  ),
+                ],
+              )
+            ]),
           ),
           actionsAlignment: MainAxisAlignment.spaceAround,
-          actions: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: double.infinity),
-              child: ElevatedButton(
-                  onPressed: () {
-                    var formatter =
-                        DateFormat('EEEE, d MMMM yyyy - hh:mm', 'id_ID');
-
-                    PersonPayment payment = PersonPayment(
-                        name: person,
-                        amount: int.parse(amount),
-                        createdAt: formatter.format(DateTime.now()));
-                    DatabaseHelper.instance.addPayment(payment);
-                    Navigator.pushAndRemoveUntil<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => const RootPage()),
-                        ((route) => false));
-                  },
-                  child: const Text('Bayar')),
-            ),
-            ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: double.maxFinite),
-              child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                          color: Theme.of(context).colorScheme.primary)),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Batal')),
-            ),
-          ],
         );
       });
 }
