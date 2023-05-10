@@ -45,9 +45,9 @@ class _SearchPageState extends State<SearchPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black45),
+              color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(5)),
             child: Row(
               children:  [
@@ -63,6 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 Expanded(
                     child: TextField(
+                      autofocus: true,
                       controller: _searcController,
                   decoration: const InputDecoration(
                     hintText: 'Cari',
