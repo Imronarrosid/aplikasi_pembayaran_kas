@@ -80,11 +80,13 @@ class _HomeState extends State<Home> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Pembaran Kas',
-                            style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                          Text(
+                            (Payment.getName() == null)
+                                    ? 'Pembayaran kas'
+                                    : paymentName,
+                            style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
                           ),
-                          Text(dateFormatNow.format(DateTime.now()))
+                          Text(dateFormatNow.format(DateTime.now()),style: const TextStyle(color: Colors.black54),)
                         ],
                       ),
                     ),
@@ -96,7 +98,7 @@ class _HomeState extends State<Home> {
                   width: double.infinity,
                   child: Entry(
                     yOffset: -1000,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.fastOutSlowIn,
                     child: Card(
                       elevation: 0,
@@ -305,14 +307,15 @@ class _HomeState extends State<Home> {
                   child: Container(
                     height: 45,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black45),
+                      color: Colors.grey[200],
                       borderRadius: const BorderRadius.all(Radius.circular(50))
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: const [
-                        Icon(IconlyBroken.search),
+                        Hero(tag: 'search',
+                        child: Icon(IconlyBroken.search,color: Colors.black45,)),
                         SizedBox(width: 10,),
                         Text(
                           'Cari'
@@ -322,39 +325,6 @@ class _HomeState extends State<Home> {
                     )
                   ),
                 ),
-                (Payment.getName() != null)
-                    ? Entry.offset(
-                        xOffset: 1000,
-                        yOffset: 0,
-                        delay: const Duration(milliseconds: 200),
-                        child: Container(
-                          height: 34,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          margin: const EdgeInsets.symmetric(horizontal: 19),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                (Payment.getName() == null)
-                                    ? 'Pembayaran kas'
-                                    : paymentName,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                dateFormat.format(DateTime.now()),
-                                style: TextStyle(),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    : Container(),
-                const SizedBox(height: 10),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SizedBox(
