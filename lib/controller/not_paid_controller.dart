@@ -10,7 +10,7 @@ Future<void> resetNotPaid() async {
   for (index = 0; index < persons.length; index++) {
     var item = persons[index];
     var notPaid =
-        int.parse(item.paid) - int.parse(item.notPaid) > Payment.getHaveToPaid()
+        int.parse(item.paid) - int.parse(item.notPaid) >= Payment.getHaveToPaid()
             ? 0
             : paymentAmount;
     var reseted = int.parse(item.notPaid) + notPaid;
