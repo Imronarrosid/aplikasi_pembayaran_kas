@@ -15,77 +15,91 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _searcController= TextEditingController();
+  final TextEditingController _searcController = TextEditingController();
   String _searchText = '';
-   List<Person> _items = [];
+  List<Person> _items = [];
   List<Person> _filteredItems = [];
 
-    void _onSearchTextChanged(String value) async{
-      _items=await DatabaseHelper.instance.getPerson();
+  void _onSearchTextChanged(String value) async {
+    _items = await DatabaseHelper.instance.getPerson();
     setState(() {
       _searchText = value;
       _filteredItems = _items
-          .where((item) => item.name.toLowerCase().contains(_searchText.toLowerCase()))
+          .where((item) =>
+              item.name.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
-      if(_searchText.isEmpty){
-        _filteredItems=[];
+      if (_searchText.isEmpty) {
+        _filteredItems = [];
       }
     });
   }
-    bool _searchNotFound(){
-      return _filteredItems.isEmpty ? true :false;
-  }
 
+  bool _searchNotFound() {
+    return _filteredItems.isEmpty ? true : false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black87),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(5)),
-            child: Row(
-              children:  [
-                const Hero(
-                  tag: 'search',
-                  child: Icon(
-                    IconlyBroken.search,
-                    color: Colors.black45,
+        appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.black87),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(5)),
+              child: Row(
+                children: [
+                  const Hero(
+                    tag: 'search',
+                    child: Icon(
+                      IconlyBroken.search,
+                      color: Colors.black45,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 7,
-                ),
-                Expanded(
-                    child: TextField(
-                      autofocus: true,
-                      controller: _searcController,
-                  decoration: const InputDecoration(
-                    hintText: 'Cari',
-                    border: InputBorder.none),
-                  onChanged: _onSearchTextChanged,
-                )),
-              ],
-            ),
-          )),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: _searchNotFound() && _searcController.text.isNotEmpty? Center(child: Text('$_searchText Tidak ditamukan'),):ListView.builder(
-          itemCount: _filteredItems.length,
-                    shrinkWrap: true,
-                    itemBuilder: (_,index){
-                      var items = _filteredItems[index];
+                  const SizedBox(
+                    width: 7,
+                  ),
+                  Expanded(
+                      child: TextField(
+                    autofocus: true,
+                    controller: _searcController,
+                    decoration: const InputDecoration(
+                        hintText: 'Cari', border: InputBorder.none),
+                    onChanged: _onSearchTextChanged,
+                  )),
+                ],
+              ),
+            )),
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: _searchNotFound() && _searcController.text.isNotEmpty
+              ? Center(
+                  child: Text('$_searchText Tidak ditamukan'),
+                )
+              : ListView.builder(
+                  itemCount: _filteredItems.length,
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) {
+                    var items = _filteredItems[index];
                     return ListTile(
-                      title: Text(items.name),
+                      leading:  Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey[200]
+                        ),
+                        child:  const Icon(IconlyBroken.search,color: Colors.black54,),),
+                      title: Text(items.name,style: const TextStyle(
+                        fontWeight: FontWeight.w500
+                      ),),
                       minVerticalPadding: 15,
                       trailing: const Icon(IconlyBroken.arrow_right_2),
                       subtitle: (int.parse(items.notPaid) <= 0)
-                            ? Align(
+                          ? Align(
                               alignment: Alignment.centerLeft,
                               child: UnconstrainedBox(
                                 child: Container(
@@ -93,8 +107,8 @@ class _SearchPageState extends State<SearchPage> {
                                         horizontal: 8, vertical: 2),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color:
-                                            const Color(0xFF4273FF).withOpacity(0.2)),
+                                        color: const Color(0xFF4273FF)
+                                            .withOpacity(0.2)),
                                     child: const Text(
                                       'Lunas',
                                       style: TextStyle(
@@ -104,19 +118,21 @@ class _SearchPageState extends State<SearchPage> {
                                     )),
                               ),
                             )
-                            : Text(
-                                '- ${NumberFormater.numFormat(int.parse(items.notPaid))}',
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xFFF7444E),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: ((context) =>  PersonPage(person: items,)))),
-      
+                          : Text(
+                              '- ${NumberFormater.numFormat(int.parse(items.notPaid))}',
+                              style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFFF7444E),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => PersonPage(
+                                    person: items,
+                                  )))),
                     );
                   }),
-      )
-          
-    );
+        ));
   }
 }
