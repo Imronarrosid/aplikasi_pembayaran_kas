@@ -133,6 +133,7 @@ class _CashOutPageState extends State<CashOutPage> {
                           Entry.offset(
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  elevation: 0,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                     minimumSize:
                                         const Size(double.infinity, 45),
