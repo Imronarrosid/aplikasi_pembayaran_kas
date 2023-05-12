@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
                     child: Entry.offset(
                       yOffset: -1000,
                       duration: const Duration(milliseconds: 200),
-                      delay: Duration(milliseconds: 100),
+                      delay: const Duration(milliseconds: 100),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
