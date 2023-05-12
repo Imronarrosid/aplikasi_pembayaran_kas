@@ -7,7 +7,7 @@ import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/formater/date_format.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
-import 'package:pembayaran_kas/screen/search_page.dart';
+import 'package:pembayaran_kas/screen/search_screen.dart';
 import 'package:pembayaran_kas/view/create_cash_out.dart';
 import 'package:pembayaran_kas/view/create_payment.dart';
 import 'package:pembayaran_kas/view/show_card.dart';
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
         .merge(const TextStyle(color: Colors.white));
     late String paymentName = Payment.getName();
     var dateFormat = DateFormat('yyyy-MM-dd');
-    var dateFormatNow = DateFormat('EEEE, d MMMM yyyy','id_ID');
+    var dateFormatNow = DateFormat('EEEE, d MMMM yyyy', 'id_ID');
     Future<int> isTableEmpty() async {
       final db = await DatabaseHelper.instance.database;
 
@@ -71,22 +71,28 @@ class _HomeState extends State<Home> {
               child: ListView(shrinkWrap: true, children: [
                 SafeArea(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical:10,horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     alignment: Alignment.centerLeft,
                     height: 70,
                     child: Entry.offset(
                       yOffset: -1000,
-                      delay: const Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 200),
+                      delay: Duration(milliseconds: 100),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             (Payment.getName() == null)
-                                    ? 'Pembayaran kas'
-                                    : paymentName,
-                            style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
+                                ? 'Pembayaran kas'
+                                : paymentName,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 20),
                           ),
-                          Text(dateFormatNow.format(DateTime.now()),style: const TextStyle(color: Colors.black54),)
+                          Text(
+                            dateFormatNow.format(DateTime.now()),
+                            style: const TextStyle(color: Colors.black54),
+                          )
                         ],
                       ),
                     ),
@@ -99,6 +105,7 @@ class _HomeState extends State<Home> {
                   child: Entry(
                     yOffset: -1000,
                     duration: const Duration(milliseconds: 300),
+                    delay: const Duration(microseconds: 120),
                     curve: Curves.fastOutSlowIn,
                     child: Card(
                       elevation: 0,
@@ -128,15 +135,14 @@ class _HomeState extends State<Home> {
                                             style: title1.merge(const TextStyle(
                                                 color: Colors.black87))),
                                         Text(
-                                              NumberFormater.numFormat(
-                                                  Payment.getBalaceLeft()),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .merge(const TextStyle(
-                                                    fontSize: 24,
-                                                      color: Colors.black87)),
-                                        
+                                          NumberFormater.numFormat(
+                                              Payment.getBalaceLeft()),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .merge(const TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black87)),
                                         ),
                                       ],
                                     ),
@@ -151,27 +157,33 @@ class _HomeState extends State<Home> {
                                                           0 &&
                                                       data!.isNotEmpty)
                                                   ? Container(
-                                                      padding: const EdgeInsets.only(
-                                                          right: 5,
-                                                          left: 5,
-                                                          top: 0,
-                                                          bottom: 15),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 5,
+                                                              left: 5,
+                                                              top: 0,
+                                                              bottom: 15),
                                                       height: 50,
                                                       child: (StartButtonController
                                                               .getState())
                                                           ? OutlinedButton(
                                                               style: OutlinedButton.styleFrom(
-                                                                foregroundColor: const Color(0xFFF7444E),
+                                                                  foregroundColor:
+                                                                      const Color(
+                                                                          0xFFF7444E),
                                                                   side: const BorderSide(
-                                                                      color: Color(0xFFF7444E),
+                                                                      color: Color(
+                                                                          0xFFF7444E),
                                                                       width: 1),
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius: BorderRadius.circular(
                                                                           100)),
-                                                                  minimumSize: const Size(
-                                                                      110, 15),
-                                                                  maximumSize: const Size(
-                                                                      120, 15)),
+                                                                  minimumSize:
+                                                                      const Size(
+                                                                          110, 15),
+                                                                  maximumSize:
+                                                                      const Size(
+                                                                          120, 15)),
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -193,12 +205,7 @@ class _HomeState extends State<Home> {
                                                                 setState(() {});
                                                               })
                                                           : ElevatedButton(
-                                                              style: ElevatedButton.styleFrom(
-                                                                elevation: 0,
-                                                                  backgroundColor: Theme.of(context).colorScheme.primary,
-                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-                                                                  minimumSize: const Size(110, 15),
-                                                                  maximumSize: const Size(120, 15)),
+                                                              style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: Theme.of(context).colorScheme.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)), minimumSize: const Size(110, 15), maximumSize: const Size(120, 15)),
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -237,20 +244,21 @@ class _HomeState extends State<Home> {
                                                 Text('Pemasukan',
                                                     style: title1.merge(
                                                         const TextStyle(
-                                                            color:
-                                                                Colors.black87))),
+                                                            color: Colors
+                                                                .black87))),
                                                 const Icon(Icons.add,
                                                     size: 16,
                                                     color: Colors.black87),
                                               ],
-                                            ),Text(
-                                                  NumberFormater.numFormat(
-                                                      Payment.getCashIn()),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .displayLarge!
-                                                      .merge(const TextStyle(
-                                                          color: Colors.black87)),
+                                            ),
+                                            Text(
+                                              NumberFormater.numFormat(
+                                                  Payment.getCashIn()),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .merge(const TextStyle(
+                                                      color: Colors.black87)),
                                             ),
                                           ],
                                         ),
@@ -258,7 +266,8 @@ class _HomeState extends State<Home> {
                                     ),
                                     Expanded(
                                       child: Container(
-                                        padding: const EdgeInsets.only(left: 10),
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
                                         height: 35,
                                         child: Column(
                                           crossAxisAlignment:
@@ -269,21 +278,21 @@ class _HomeState extends State<Home> {
                                                 Text('Pengeluaran',
                                                     style: title1.merge(
                                                         const TextStyle(
-                                                            color:
-                                                                Colors.black87))),
+                                                            color: Colors
+                                                                .black87))),
                                                 const Icon(Icons.remove,
                                                     size: 16,
                                                     color: Colors.black87),
                                               ],
                                             ),
-                                                Text(
-                                                  NumberFormater.numFormat(
-                                                      Payment.getCashOut()),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .displayLarge!
-                                                      .merge(const TextStyle(
-                                                          color: Colors.black87)),
+                                            Text(
+                                              NumberFormater.numFormat(
+                                                  Payment.getCashOut()),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .merge(const TextStyle(
+                                                      color: Colors.black87)),
                                             ),
                                           ],
                                         ),
@@ -300,29 +309,38 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   height: 15,
                 ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
-                  },
+                Entry.offset(
+                  xOffset: 0,
+                  yOffset: -1000,
+                  duration: const Duration(milliseconds: 150),
+                  delay: const Duration(microseconds: 10),
+                  curve: Curves.fastOutSlowIn,
                   child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: const BorderRadius.all(Radius.circular(50))
+                        color: Colors.grey[200],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchPage()));
+                      },
+                      child: const TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                            hintText: 'Cari',
+                            border: InputBorder.none,
+                            icon: Icon(
+                              IconlyBroken.search,
+                              color: Colors.black45,
+                            )),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      children: const [
-                        Hero(tag: 'search',
-                        child: Icon(IconlyBroken.search,color: Colors.black45,)),
-                        SizedBox(width: 10,),
-                        Text(
-                          'Cari'
-                          ,style: TextStyle(color: Colors.black54,fontSize: 16),
-                        )
-                      ],
-                    )
                   ),
                 ),
                 Padding(
