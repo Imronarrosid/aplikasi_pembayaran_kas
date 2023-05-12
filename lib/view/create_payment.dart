@@ -212,7 +212,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                           yOffset: 0,
                           xOffset: 1000,
                           delay: Duration(milliseconds: 50),
-                          child: Text('Contoh : 5000',
+                          child: Text('Nomina kas',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w500)),
                         ),
@@ -260,7 +260,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                                 },
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.only(left: 10),
-                                  hintText: 'Nominal/pembayaran',
+                                  hintText: 'Contoh : 5000',
                                   floatingLabelAlignment:
                                       FloatingLabelAlignment.start,
                                   floatingLabelStyle: TextStyle(
