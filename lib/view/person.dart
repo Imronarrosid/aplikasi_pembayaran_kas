@@ -390,13 +390,13 @@ class _PersonPageState extends State<PersonPage> {
                                                                   .primaryColor
                                                                   .withOpacity(
                                                                       0.2)),
-                                                          child: Icon(
-                                                            IconlyBroken
-                                                                .arrow_down_3,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                          )),
+                                                          child: 
+                                                           Icon(
+                                                            IconlyBroken.download,
+                                                            size: 20,
+                                                            color: Theme.of(context).primaryColor,
+                                                          ),
+                                                        ),
                                                       const SizedBox(
                                                         width: 10,
                                                       ),
@@ -429,7 +429,7 @@ class _PersonPageState extends State<PersonPage> {
                                                       Text(NumberFormater
                                                               .numFormat(
                                                                   item.amount)
-                                                          .toString()),
+                                                          .toString(),style: TextStyle(fontWeight: FontWeight.w500)),
                                                     ],
                                                   ),
                                                 );
@@ -456,17 +456,24 @@ void deleteDialog(context, String person, int id) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Hapus'),
-          content: SingleChildScrollView(
-            child: ListBody(children: [Text('Yakin mau hapus "$person"')]),
+          contentTextStyle: const TextStyle(
+            fontSize: 20,
+            color: Colors.black87
           ),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Batal')),
-            ElevatedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15)
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(children: [Text('Yakin hapus "$person"?'),
+            const SizedBox(height: 15,),
+            Row(
+              children: [
+                Expanded(child: 
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFF7444E),
+                    elevation: 0
+                  ),
                 onPressed: () {
                   DatabaseHelper.instance.remove(id);
 
@@ -477,7 +484,25 @@ void deleteDialog(context, String person, int id) {
                       ((route) => false));
                 },
                 child: const Text('Hapus'))
-          ],
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Expanded(child: 
+            TextButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: const Color(0xFFF7444E)
+              ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Batal')),
+                )
+              ],
+            )
+            ]),
+          ),
+        
         );
       });
 }
