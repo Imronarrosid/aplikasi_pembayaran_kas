@@ -46,33 +46,22 @@ class _SearchPageState extends State<SearchPage> {
             elevation: 0,
             backgroundColor: Colors.transparent,
             title: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                children: [
-                  const Hero(
-                    tag: 'search',
-                    child: Icon(
-                      IconlyBroken.search,
-                      color: Colors.black45,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                  Expanded(
-                      child: TextField(
-                    autofocus: true,
-                    controller: _searcController,
-                    decoration: const InputDecoration(
-                        hintText: 'Cari', border: InputBorder.none),
-                    onChanged: _onSearchTextChanged,
-                  )),
-                ],
-              ),
-            )),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(5)),
+                
+                  child: TextField(
+                        autofocus: true,
+                        controller: _searcController,
+                        decoration: const InputDecoration(
+                          icon: Icon(IconlyBroken.search,color: Colors.black45,),
+                            hintText: 'Cari', border: InputBorder.none),
+                        onChanged: _onSearchTextChanged,
+                      ),
+                ),
+            
+                ),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: _searchNotFound() && _searcController.text.isNotEmpty
