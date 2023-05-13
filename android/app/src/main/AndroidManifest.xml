@@ -6,7 +6,7 @@
     <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
    <application
-        android:label="pembayaran_kas"
+        android:label="Kas"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
