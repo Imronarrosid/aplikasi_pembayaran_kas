@@ -35,14 +35,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Color listTileIconColor = Theme.of(context).colorScheme.primary;
     double screenWidth = MediaQuery.of(context).size.width;
     TextStyle title1 = Theme.of(context)
         .textTheme
         .titleMedium!
         .merge(const TextStyle(color: Colors.white));
     late String paymentName = Payment.getName();
-    var dateFormat = DateFormat('yyyy-MM-dd');
     var dateFormatNow = DateFormat('EEEE, d MMMM yyyy', 'id_ID');
     Future<int> isTableEmpty() async {
       final db = await DatabaseHelper.instance.database;
