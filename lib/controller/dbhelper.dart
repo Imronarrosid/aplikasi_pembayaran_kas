@@ -70,7 +70,6 @@ class DatabaseHelper {
 
   Future<int> update(Person person) async {
     Database db = await instance.database;
-    print('update ${person.name}${person.id}success$person');
     return await db.update('person', person.toMap(),
         where: "id = ?", whereArgs: [person.id]);
   }
@@ -95,7 +94,6 @@ class DatabaseHelper {
 
   Future<int> updateCashOutHistory(CashOut cashOut) async {
     Database db = await instance.database;
-    print('update ${cashOut.description}${cashOut.id}success$cashOut');
     return await db.update('cash_out_history', cashOut.toMap(),
         where: "id = ?", whereArgs: [cashOut.id]);
   }
