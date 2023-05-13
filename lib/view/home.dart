@@ -316,8 +316,8 @@ class _HomeState extends State<Home> {
                   delay: const Duration(microseconds: 10),
                   curve: Curves.fastOutSlowIn,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 45,
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -355,12 +355,10 @@ class _HomeState extends State<Home> {
                             return Container(
                               alignment: Alignment.center,
                               height: 300,
-                              child: Text(
+                              child: const Text(
                                 'Belum ada pembayaran',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).primaryColor),
+                                    fontWeight: FontWeight.w500,),
                               ),
                             );
                           } else {
