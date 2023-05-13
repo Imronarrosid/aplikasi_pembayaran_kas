@@ -40,10 +40,10 @@ class _RootPageState extends State<RootPage> {
             activeIcon: Icon(IconlyBold.home),
             icon:Icon(IconlyBroken.home)),
           BottomNavigationBarItem(
-            activeIcon: Icon(IconlyBold.editSquare),
+            activeIcon: const Icon(IconlyBold.editSquare),
             label: (Payment.getName() == null)?'Buat':'Edit',
-            icon:Icon(IconlyBroken.edit_square)),
-          BottomNavigationBarItem(
+            icon:const Icon(IconlyBroken.edit_square)),
+          const BottomNavigationBarItem(
             activeIcon: Icon(IconlyBold.paper),
             label: 'Pengeluaran'
             ,icon:Icon(IconlyBroken.paper))
