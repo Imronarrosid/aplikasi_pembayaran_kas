@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/service/notification.dart';
-import 'package:pembayaran_kas/view/home.dart';
 import 'package:pembayaran_kas/view/root_page.dart';
 
 Future<void> startPaymentDialog(BuildContext context) async {
