@@ -25,7 +25,6 @@ class _PersonPageState extends State<PersonPage> {
   bool isEmpty = true;
   bool changeName = false;
 
-  static int paid = Payment.getAmount();
   bool isActive = false;
   final _formKey = GlobalKey<FormState>();
   @override
