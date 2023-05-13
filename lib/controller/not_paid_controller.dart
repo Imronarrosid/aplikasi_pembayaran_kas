@@ -9,7 +9,6 @@ Future<void> resetNotPaid() async {
   var haveToPaid = Payment.getHaveToPaid() + Payment.getAmount();
   Payment.setHaveToPaid(haveToPaid);
   for (index = 0; index < persons.length; index++) {
-    print(index);
     var item = persons[index];
     var notPaid = int.parse(item.paid) - int.parse(item.notPaid) >=
             Payment.getHaveToPaid()
@@ -24,6 +23,5 @@ Future<void> resetNotPaid() async {
         createdAt: DateTime.now().toString());
 
     await DatabaseHelper.instance.update(personObj);
-    print('${item.name} ${item.notPaid}');
   }
 }
