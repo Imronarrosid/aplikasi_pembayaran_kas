@@ -21,7 +21,7 @@ Future<void> cashOutDialog(BuildContext context,
             children: <Widget>[
               Text(
                 'Buat pengeluaran \n$amount untuk $description',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(
                 height: 25,
