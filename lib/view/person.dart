@@ -101,6 +101,7 @@ class _PersonPageState extends State<PersonPage> {
                           children: [
                             Entry.offset(
                               yOffset: -1000,
+                              duration: const Duration(milliseconds: 500),
                               child: SizedBox(
                                 width: secreenWidth,
                                 height: 170,
@@ -131,9 +132,10 @@ class _PersonPageState extends State<PersonPage> {
                                         ))),
                               ),
                             ),
-                            Entry.scale(
-                              scale: -2,
-                              duration: const Duration(milliseconds: 300),
+                            Entry.offset(
+                              yOffset: -1000,
+                              curve: Curves.bounceIn,
+                              duration: const Duration(milliseconds: 400),
                               child: ListView(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
@@ -363,6 +365,7 @@ class _PersonPageState extends State<PersonPage> {
                                 child: const Entry.offset(
                                   yOffset: 0,
                                   xOffset: 1000,
+                                  duration: Duration(milliseconds: 300),
                                   child: Text(
                                     'Riwayat Pembayaran',
                                     style: TextStyle(
