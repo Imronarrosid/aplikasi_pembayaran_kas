@@ -6,7 +6,7 @@ class Notif{
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('ic_launcher');
+        const AndroidInitializationSettings('drawable/ic_launcher');
 
     var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
