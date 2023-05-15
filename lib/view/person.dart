@@ -134,7 +134,6 @@ class _PersonPageState extends State<PersonPage> {
                             ),
                             Entry.offset(
                               yOffset: -1000,
-                              curve: Curves.bounceIn,
                               duration: const Duration(milliseconds: 400),
                               child: ListView(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -387,8 +386,12 @@ class _PersonPageState extends State<PersonPage> {
                                           ? const SizedBox(
                                               height: 300,
                                               child: Center(
-                                                  child: Text(
-                                                      'Belum ada pembayaran')),
+                                                  child: Entry.offset(
+                                                    yOffset: 1000,
+                                                    duration: Duration(milliseconds: 300),
+                                                    child: Text(
+                                                        'Belum ada pembayaran'),
+                                                  )),
                                             )
                                           : ListView.builder(
                                               physics:
