@@ -1,16 +1,16 @@
-# pembayaran_kas
+# Kas
 
-A new Flutter project.
+<img src="android/app/src/main/res/drawable/launcher_icon.png" width="80">
 
-## Getting Started
+## Screenshot
 
-This project is a starting point for a Flutter application.
+<img src="images/Screenshot_2023-05-13-21-26-01-489_com.example.pembayaran_kas.jpg" width="200">
+<img src="images/Screenshot_2023-05-13-21-29-04-397_com.example.pembayaran_kas.jpg" width="200">
+<img src="images/Screenshot_2023-05-13-21-30-12-451_com.example.pembayaran_kas.jpg" width="200">
+<img src="images/Screenshot_2023-05-13-21-30-00-491_com.example.pembayaran_kas.jpg" width="200">
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Kas adalah sebuah aplikasi yang dibuat untuk membantu dalam mencatat kas, seperti kas kelas. Dengan Kas, dapat dengan mudah mencatat setiap transaksi kas yang terjadi di dalam kelas,
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+[Download](tess)

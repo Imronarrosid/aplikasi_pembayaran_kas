@@ -4,9 +4,9 @@ class NumberFormater {
   static String numFormat(int value) {
     final oCcy = NumberFormat.currency(
       decimalDigits: 0,
-      locale: 'eu',
-      symbol: '',
-      customPattern: '#,### \u00a4',
+      locale: 'id_ID',
+      symbol: 'Rp',
+      customPattern: '\u00a4#,### ',
     );
     return oCcy.format(value);
   }

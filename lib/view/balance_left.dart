@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pembayaran_kas/model/payment.dart';
-import 'package:pembayaran_kas/number_formater/number_format.dart';
+import 'package:pembayaran_kas/formater/number_format.dart';
 
 class BalanceLeft extends StatefulWidget {
   const BalanceLeft({super.key});

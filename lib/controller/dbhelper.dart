@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:pembayaran_kas/model/cash_out_model.dart';
 import 'package:pembayaran_kas/model/model.dart';
+import 'package:pembayaran_kas/model/person_payment_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -39,6 +40,13 @@ class DatabaseHelper {
           amount INTEGER,
           created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )''');
+        await db.execute(''' 
+        CREATE TABLE payment(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT,
+          amount INTEGER,
+          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )''');
            
   }
 
@@ -62,7 +70,6 @@ class DatabaseHelper {
 
   Future<int> update(Person person) async {
     Database db = await instance.database;
-    print('update ${person.name}${person.id}success$person');
     return await db.update('person', person.toMap(),
         where: "id = ?", whereArgs: [person.id]);
   }
@@ -87,8 +94,20 @@ class DatabaseHelper {
 
   Future<int> updateCashOutHistory(CashOut cashOut) async {
     Database db = await instance.database;
-    print('update ${cashOut.description}${cashOut.id}success$cashOut');
     return await db.update('cash_out_history', cashOut.toMap(),
         where: "id = ?", whereArgs: [cashOut.id]);
+  }
+
+  Future<int> addPayment(PersonPayment payment) async {
+    Database db = await instance.database;
+    return await db.insert('payment', payment.toMap());
+  }
+
+  Future<List<PersonPayment>> getPaymentByName(String name) async {
+    Database db = await instance.database;
+    var payment = await db.query('payment', orderBy: 'id',where: 'name = ?',whereArgs: [name]);
+    List<PersonPayment> listPayment =
+        payment.isNotEmpty ? payment.map((c) => PersonPayment.fromMap(c)).toList().reversed.toList() : [];
+    return listPayment;
   }
 }

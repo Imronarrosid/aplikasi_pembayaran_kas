@@ -5,9 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/payment.dart';
-import 'package:pembayaran_kas/number_formater/number_format.dart';
-import 'package:pembayaran_kas/view/create_cash_out.dart';
-import 'package:pembayaran_kas/view/create_payment.dart';
+import 'package:pembayaran_kas/formater/number_format.dart';
+import 'package:pembayaran_kas/screen/search_screen.dart';
 import 'package:pembayaran_kas/view/show_card.dart';
 import 'package:pembayaran_kas/view/start_payment_dialog.dart';
 import 'package:pembayaran_kas/view/stop_payment_dialog.dart';
@@ -36,14 +35,13 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Color listTileIconColor = Theme.of(context).colorScheme.primary;
     double screenWidth = MediaQuery.of(context).size.width;
     TextStyle title1 = Theme.of(context)
         .textTheme
         .titleMedium!
         .merge(const TextStyle(color: Colors.white));
     late String paymentName = Payment.getName();
-    var dateFormat = DateFormat('yyyy-MM-dd');
+    var dateFormatNow = DateFormat('EEEE, d MMMM yyyy', 'id_ID');
     Future<int> isTableEmpty() async {
       final db = await DatabaseHelper.instance.database;
 
@@ -68,15 +66,29 @@ class _HomeState extends State<Home> {
               child: ListView(shrinkWrap: true, children: [
                 SafeArea(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     alignment: Alignment.centerLeft,
-                    height: 80,
+                    height: 70,
                     child: Entry.offset(
                       yOffset: -1000,
+                      duration: const Duration(milliseconds: 200),
                       delay: const Duration(milliseconds: 100),
-                      child: Text(
-                        'Aplikasi Kas',
-                        style: Theme.of(context).textTheme.headlineSmall,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            (Payment.getName() == null)
+                                ? 'Pembayaran kas'
+                                : paymentName,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 20),
+                          ),
+                          Text(
+                            dateFormatNow.format(DateTime.now()),
+                            style: const TextStyle(color: Colors.black54),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -87,7 +99,8 @@ class _HomeState extends State<Home> {
                   width: double.infinity,
                   child: Entry(
                     yOffset: -1000,
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
+                    delay: const Duration(microseconds: 120),
                     curve: Curves.fastOutSlowIn,
                     child: Card(
                       elevation: 0,
@@ -113,26 +126,18 @@ class _HomeState extends State<Home> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Sisa kas',
+                                        Text('Sisa',
                                             style: title1.merge(const TextStyle(
                                                 color: Colors.black87))),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
-                                            ),
-                                            Text(
-                                              NumberFormater.numFormat(
-                                                  Payment.getBalaceLeft()),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .merge(const TextStyle(
-                                                      color: Colors.black87)),
-                                            ),
-                                          ],
+                                        Text(
+                                          NumberFormater.numFormat(
+                                              Payment.getBalaceLeft()),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .merge(const TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black87)),
                                         ),
                                       ],
                                     ),
@@ -147,27 +152,33 @@ class _HomeState extends State<Home> {
                                                           0 &&
                                                       data!.isNotEmpty)
                                                   ? Container(
-                                                      padding: const EdgeInsets.only(
-                                                          right: 5,
-                                                          left: 5,
-                                                          top: 0,
-                                                          bottom: 15),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 5,
+                                                              left: 5,
+                                                              top: 0,
+                                                              bottom: 15),
                                                       height: 50,
                                                       child: (StartButtonController
                                                               .getState())
                                                           ? OutlinedButton(
                                                               style: OutlinedButton.styleFrom(
-                                                                  side: BorderSide(
-                                                                      color: Theme.of(context)
-                                                                          .primaryColor,
+                                                                  foregroundColor:
+                                                                      const Color(
+                                                                          0xFFF7444E),
+                                                                  side: const BorderSide(
+                                                                      color: Color(
+                                                                          0xFFF7444E),
                                                                       width: 1),
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius: BorderRadius.circular(
                                                                           100)),
-                                                                  minimumSize: const Size(
-                                                                      110, 15),
-                                                                  maximumSize: const Size(
-                                                                      120, 15)),
+                                                                  minimumSize:
+                                                                      const Size(
+                                                                          110, 15),
+                                                                  maximumSize:
+                                                                      const Size(
+                                                                          120, 15)),
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -189,17 +200,13 @@ class _HomeState extends State<Home> {
                                                                 setState(() {});
                                                               })
                                                           : ElevatedButton(
-                                                              style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: Theme.of(context).colorScheme.primary,
-                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-                                                                  minimumSize: const Size(110, 15),
-                                                                  maximumSize: const Size(120, 15)),
+                                                              style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: Theme.of(context).colorScheme.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)), minimumSize: const Size(110, 15), maximumSize: const Size(120, 15)),
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .center,
-                                                                children: [
-                                                                  const Text(
+                                                                children: const [
+                                                                  Text(
                                                                       'Mulai  '),
                                                                   Icon(Icons
                                                                       .play_arrow_rounded)
@@ -220,28 +227,24 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: 35,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text('Pemasukan',
-                                                style: title1.merge(
-                                                    const TextStyle(
-                                                        color:
-                                                            Colors.black87))),
-                                            const Icon(Icons.add,
-                                                size: 16,
-                                                color: Colors.black87),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
+                                            Row(
+                                              children: [
+                                                Text('Pemasukan',
+                                                    style: title1.merge(
+                                                        const TextStyle(
+                                                            color: Colors
+                                                                .black87))),
+                                                const Icon(Icons.add,
+                                                    size: 16,
+                                                    color: Colors.black87),
+                                              ],
                                             ),
                                             Text(
                                               NumberFormater.numFormat(
@@ -254,39 +257,28 @@ class _HomeState extends State<Home> {
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    Container(
-                                      width: 1.2,
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.black87,
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(50),
-                                              bottom: Radius.circular(50))),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                    Expanded(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        height: 35,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text('Pengeluaran',
-                                                style: title1.merge(
-                                                    const TextStyle(
-                                                        color:
-                                                            Colors.black87))),
-                                            const Icon(Icons.remove,
-                                                size: 16,
-                                                color: Colors.black87),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Rp ',
-                                              style: TextStyle(
-                                                  color: Colors.black87),
+                                            Row(
+                                              children: [
+                                                Text('Pengeluaran',
+                                                    style: title1.merge(
+                                                        const TextStyle(
+                                                            color: Colors
+                                                                .black87))),
+                                                const Icon(Icons.remove,
+                                                    size: 16,
+                                                    color: Colors.black87),
+                                              ],
                                             ),
                                             Text(
                                               NumberFormater.numFormat(
@@ -299,7 +291,7 @@ class _HomeState extends State<Home> {
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ],
                                 )
@@ -312,39 +304,40 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   height: 15,
                 ),
-                (Payment.getName() != null)
-                    ? Entry.offset(
-                        xOffset: 300,
-                        yOffset: 0,
-                        delay: const Duration(milliseconds: 200),
-                        child: Container(
-                          height: 34,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          margin: const EdgeInsets.symmetric(horizontal: 19),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                (Payment.getName() == null)
-                                    ? 'Pembayaran kas'
-                                    : paymentName,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                dateFormat.format(DateTime.now()),
-                                style: TextStyle(),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    : Container(),
-                const SizedBox(height: 10),
+                Entry.offset(
+                  xOffset: 0,
+                  yOffset: -1000,
+                  duration: const Duration(milliseconds: 150),
+                  delay: const Duration(microseconds: 10),
+                  curve: Curves.fastOutSlowIn,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    height: 45,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchPage()));
+                      },
+                      child: const TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                            hintText: 'Cari',
+                            border: InputBorder.none,
+                            icon: Icon(
+                              IconlyBroken.search,
+                              color: Colors.black45,
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SizedBox(
@@ -357,12 +350,10 @@ class _HomeState extends State<Home> {
                             return Container(
                               alignment: Alignment.center,
                               height: 300,
-                              child: Text(
+                              child: const Text(
                                 'Belum ada pembayaran',
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).primaryColor),
+                                    fontWeight: FontWeight.w500,),
                               ),
                             );
                           } else {
