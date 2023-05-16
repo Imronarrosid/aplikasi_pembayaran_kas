@@ -7,9 +7,9 @@ import 'package:pembayaran_kas/controller/start_button_controller.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
 import 'package:pembayaran_kas/screen/search_screen.dart';
-import 'package:pembayaran_kas/view/show_card.dart';
-import 'package:pembayaran_kas/view/start_payment_dialog.dart';
-import 'package:pembayaran_kas/view/stop_payment_dialog.dart';
+import 'package:pembayaran_kas/widget/show_card.dart';
+import 'package:pembayaran_kas/widget/start_payment_dialog.dart';
+import 'package:pembayaran_kas/widget/stop_payment_dialog.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Home extends StatefulWidget {
