@@ -2,9 +2,9 @@ import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pembayaran_kas/model/payment.dart';
-import 'package:pembayaran_kas/view/create_cash_out.dart';
-import 'package:pembayaran_kas/view/create_payment.dart';
-import 'package:pembayaran_kas/view/home.dart';
+import 'package:pembayaran_kas/screen/create_cash_out.dart';
+import 'package:pembayaran_kas/screen/create_payment.dart';
+import 'package:pembayaran_kas/screen/home.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});

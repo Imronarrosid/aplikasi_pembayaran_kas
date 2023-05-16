@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
-import 'package:pembayaran_kas/view/cash_out_dialog.dart';
+import 'package:pembayaran_kas/widget/cash_out_dialog.dart';
 import '../model/payment.dart';
 
 class CashOutPage extends StatefulWidget {

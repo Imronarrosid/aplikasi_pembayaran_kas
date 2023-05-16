@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pembayaran_kas/service/notification.dart';
-import 'package:pembayaran_kas/view/root_page.dart';
+import 'package:pembayaran_kas/screen/root_page.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
 
