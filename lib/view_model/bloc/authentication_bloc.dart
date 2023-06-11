@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:pembayaran_kas/model/repository/authentication_repository/authentication_repository.dart';
 import 'package:pembayaran_kas/model/user.dart';
@@ -11,7 +12,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc(
       {required AuthenticationRepository authenticationRepository})
-      : super(UnAuthenticated()) {
+      : super(authenticationRepository.user == null ? UnAuthenticated() : Authenticated()) {
     on<GoogleSignInRequested>((event, emit) async {
       emit(Loading());
       try {
