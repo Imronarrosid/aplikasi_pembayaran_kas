@@ -3,7 +3,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pembayaran_kas/controller/dbhelper.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
 import 'package:pembayaran_kas/model/model.dart';
-import 'package:pembayaran_kas/screen/person.dart';
+import 'package:pembayaran_kas/view/person.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

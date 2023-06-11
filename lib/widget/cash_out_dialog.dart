@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pembayaran_kas/screen/root_page.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 import '../controller/dbhelper.dart';
 import '../formater/date_format.dart';

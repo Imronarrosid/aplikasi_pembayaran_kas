@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "96324714014",
+    "project_id": "pencatatan-kas-f4b28",
+    "storage_bucket": "pencatatan-kas-f4b28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96324714014:android:f006c264b8dddf7780380f",
+        "android_client_info": {
+          "package_name": "com.example.pembayaran_kas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "96324714014-cngntc0ciutq1b0bc0nbh7fmbojq9mh5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw0wuw_sqAedTvvgbhCrpKpmID_RWpEFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "96324714014-cngntc0ciutq1b0bc0nbh7fmbojq9mh5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "96324714014-g09anhqbon48t3lot8hg01m46d32rum9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pembayaranKas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

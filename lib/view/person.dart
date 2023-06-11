@@ -8,7 +8,7 @@ import 'package:pembayaran_kas/model/model.dart';
 import 'package:pembayaran_kas/model/payment.dart';
 import 'package:pembayaran_kas/model/person_payment_model.dart';
 import 'package:pembayaran_kas/formater/number_format.dart';
-import 'package:pembayaran_kas/screen/root_page.dart';
+import 'package:pembayaran_kas/view/root_page.dart';
 
 class PersonPage extends StatefulWidget {
   final Person person;
